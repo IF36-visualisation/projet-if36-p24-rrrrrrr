@@ -3,6 +3,10 @@
 # Analyse des conditions de vie des étudiants
 **Proposition projet IF36**
 
+## Introduction
+Le projet d'IF36 est pour nous l'occasion d'atudier un domaine qui nous intéresse. Etant nous-mêmes étudiants, quoi de mieux que les conditions de vie des étudiants?
+Notre objectif durant cette analyse exploratoire d'un dataset sur ce sujet sera de mettre en avant l'existence ou non de relations entre différents aspects de la vie d'étudiants. Nous couvrirons globalement l'ensemble des pilliers sur lesquels repose la vie typique d'un étudiant: la scolarité, l'éducation, la vie extra-scolaire et les relations privées.
+
 ## Données
 Vos données décrites en détails avec le nombre d’observations et de variables, et le type des variables.
 D’où viennent-elles, pourquoi les avez-vous choisies, dans quel contexte s’intègre-elles ?
