@@ -10,7 +10,7 @@ Le projet d'IF36 est pour nous l'occasion d'atudier un domaine qui nous intéres
 Notre objectif durant cette analyse exploratoire d'un dataset sur ce sujet sera de mettre en avant l'existence ou non de relations entre différents aspects de la vie d'étudiants. Nous couvrirons globalement l'ensemble des pilliers sur lesquels repose la vie typique d'un étudiant: la scolarité, l'éducation, la vie extra-scolaire et les relations privées.
 
 ## Données
-Notre dataset provient de l'UCI Machine Learning trouvé sur kaggle. [Link](https://www.kaggle.com/datasets/uciml/student-alcohol-consumption/data)("Lien vers le dataset")
+Notre dataset provient de l'UCI Machine Learning trouvé sur kaggle. [Lien vers le dataset](https://www.kaggle.com/datasets/uciml/student-alcohol-consumption/data)
 
 Il contient 649 observations et 32 variables. Les variables sont de type binaire, numérique et nominal. Ce dataset décrit de manière globale les différentes facette de la vie d'un étudiant (scolaire, extra-scolaire, relation, consommation alcool, milieu familial). Il convient donc à notre utilisation. De plus ce dataset est libre d'utilisation (CC0: Public Domain). Les données ont été obtenues lors d'une enquête auprès des étudiants des cours de mathématiques et de portugais au lycée.
 
@@ -56,11 +56,11 @@ Il contient 649 observations et 32 variables. Les variables sont de type binaire
 
 **Regroupement des données :**
 
-Detail personnel : 
+### Detail personnel : 
   - Description de l'étudiant : sex, age, adresse
   - Famille : famsize, Pstatus, Medu, Fedu, Mjob, Fjob
   - Santé: health
-Ecole : 
+### Ecole : 
   - Général : school,reason,guardian,traveltime,nursery
   - Cours supplémentaire : schoolsup,famsup,paid
   - Volonté de continuer dans le suppérieur : higher
@@ -68,11 +68,11 @@ Ecole :
   - Absences : absences
   - Echec : failures
   - Temps passer à travailler : studytime
-Extrascolaire : 
+### Extrascolaire : 
   - activities,internet,
   - famrel,romantic
   - freetime,goout
-Consommation d'alcool :
+### Consommation d'alcool :
   - Dalc,Walc
 
 Le dataset est au format csv.
