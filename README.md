@@ -18,7 +18,7 @@ Il contient 649 observations et 32 variables. Les variables sont de type binaire
 >P. Cortez and A. Silva. Using Data Mining to Predict Secondary School Student Performance. In A. Brito and J. Teixeira Eds., Proceedings of 5th FUture BUsiness TEChnology Conference (FUBUTEC 2008) pp. 5-12, Porto, Portugal, April, 2008, EUROSIS, ISBN 978-9077381-39-7.
 
 
-**Données brutes du dataset**
+### Données brutes du dataset
 
 - `school` : l'école de l'étudiant (binaire : 'GP' pour Gabriel Pereira ou 'MS' pour Mousinho da Silveira)
 - `sex` : sexe de l'étudiant (binaire : 'F' pour femme ou 'M' pour homme)
@@ -55,11 +55,11 @@ Il contient 649 observations et 32 variables. Les variables sont de type binaire
 - `G3` : note finale (numérique : de 0 à 20, cible de sortie)
 
 ### Regroupement des données :
-**Detail personnel :**
+#### Detail personnel :
   - Description de l'étudiant : sex, age, adresse
   - Famille : famsize, Pstatus, Medu, Fedu, Mjob, Fjob
   - Santé: health
-** Ecole :** 
+#### Ecole : 
   - Général : school,reason,guardian,traveltime,nursery
   - Cours supplémentaire : schoolsup,famsup,paid
   - Volonté de continuer dans le suppérieur : higher
@@ -67,11 +67,11 @@ Il contient 649 observations et 32 variables. Les variables sont de type binaire
   - Absences : absences
   - Echec : failures
   - Temps passer à travailler : studytime
-**Extrascolaire :** 
+#### Extrascolaire : 
   - activities,internet,
   - famrel,romantic
   - freetime,goout
-**Consommation d'alcool :**
+#### Consommation d'alcool :
   - Dalc,Walc
 
 Le dataset est au format csv.
