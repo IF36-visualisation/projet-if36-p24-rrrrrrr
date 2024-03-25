@@ -54,13 +54,12 @@ Il contient 649 observations et 32 variables. Les variables sont de type binaire
 - `G2` : note du deuxième trimestre (numérique : de 0 à 20)
 - `G3` : note finale (numérique : de 0 à 20, cible de sortie)
 
-**Regroupement des données :**
-
-### Detail personnel : 
+### Regroupement des données :
+**Detail personnel :**
   - Description de l'étudiant : sex, age, adresse
   - Famille : famsize, Pstatus, Medu, Fedu, Mjob, Fjob
   - Santé: health
-### Ecole : 
+** Ecole :** 
   - Général : school,reason,guardian,traveltime,nursery
   - Cours supplémentaire : schoolsup,famsup,paid
   - Volonté de continuer dans le suppérieur : higher
@@ -68,11 +67,11 @@ Il contient 649 observations et 32 variables. Les variables sont de type binaire
   - Absences : absences
   - Echec : failures
   - Temps passer à travailler : studytime
-### Extrascolaire : 
+**Extrascolaire :** 
   - activities,internet,
   - famrel,romantic
   - freetime,goout
-### Consommation d'alcool :
+**Consommation d'alcool :**
   - Dalc,Walc
 
 Le dataset est au format csv.
