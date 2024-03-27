@@ -99,16 +99,47 @@ Les questions étant les suivantes :
 - Habiter loin de son lieu d'apprentissage réduit-il la fréquence de sorties avec des amis ?
 - Le niveau d'éducation des parents pousse-t-il les enfants à avoir de bons résultats scolaires ?
 
-Pour ce faire, nous allons comparer les résultats de nos différentes variables pour essayer de trouver des corrélations.
+
+### Mais comment pourrait-on essayer de répondre à nos interrogations ?  
+   
 Par exemple pour la question suivante : Faire du sport permet-il vraiment d’avoir de meilleurs résultats scolaires ?  
 
-Nous identifions les sportifs comme ceux ayant un niveau de santé supérieur ou égal à 3/5 et prenant part à des activités extra scolaires.  
+On peut tout d'abord identifier les sportifs comme ceux ayant un niveau de santé supérieur ou égal à 3/5 et prenant part à des activités extra scolaires.  
+   
 ![image](https://github.com/IF36-visualisation/projet-if36-p24-rrrrrrr/assets/147445740/77a7aa27-4d43-443c-a6ee-fdf7e64d7986)
 
 
-Nous avons les résultats scolaires de chacun des étudiants à chaque période et au final, on peut donc en calculer une moyenne.
+Ensuite, nous avons les résultats scolaires de chacun des étudiants à chaque période et au final, on peut donc en calculer une moyenne.   
+   
 ![image](https://github.com/IF36-visualisation/projet-if36-p24-rrrrrrr/assets/147445740/f3058a2a-b10f-4d23-b539-5656e035bbb3)
 
-Nous comptons donc comparer directement les résultats scolaires des étudiants et leur sportivité pour savoir s'il y a réellement une corrélation.
+Enfin, maintenant que nous avons nos catégories, on peut comparer directement les résultats scolaires des étudiants et leur sportivité pour savoir s'il y a réellement une corrélation.   
 
+Pour cette question-ci, avant analyse et par expérience étudiante, il nous semble que les sportifs sont généralement meilleurs.   
+Suite à l'étude de notre dataset on pourra donc déterminer avec certitude si nos ressentis ont été bons ou bien si nous-nous sommes trompés.   
+   
+### Quels sont les résultats auxquels on s'attend ?   
+
+- Faire du sport permet-il vraiment d’avoir de meilleurs résultats scolaires ?   
+*Oui, c'est les boss !*   
+- Les geeks sont-vraiments meilleurs en maths ?   
+*Non, c'est les sportifs*   
+- Les fêtards sont-ils plus heureux que les autres ?   
+*Oui, amusez-vous de temps à autre !*   
+- La taille de la famille au foyer influe-t-elle sur les résultats scolaires ?   
+*Non*   
+- Le fait de sortir souvent avec des amis entraîne-t-il nécessairement une plus grande consommation d'alcool ?   
+*Conséquence souvent logique*   
+- Y-a-t-il un lien entre la consommation d'alcool et l'échec scolaire, l'absentéisme ?   
+*Oui, les matins à 8h*   
+- De manière générale, lesquels des hommes ou des femmes ont de meilleurs résultats scolaires ?   
+*Les femmes ?*   
+- Les hommes sont-ils plus fétards que les femmes ? Ou est-ce l'inverse ?   
+*Les hommes*   
+- Avoir une mère au foyer pousse-t-il à avoir de bons résultats scolaires ?   
+*Grand mystère*   
+- Habiter loin de son lieu d'apprentissage réduit-il la fréquence de sorties avec des amis ?   
+*Certainement*   
+- Le niveau d'éducation des parents pousse-t-il les enfants à avoir de bons résultats scolaires ?   
+*Oui, on suit nos exemples*   
   
