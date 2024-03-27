@@ -81,24 +81,34 @@ Maintenant que nous avons à notre disposition une grande source de données sur
 
 Et justement, en tant qu’étudiants, on a tous eu ces grandes questions qui n’ont jamais connu de réponses. Ces questions qui ont toujours semblé vraies ou parfois fausses mais qui n’ont jamais eu de finalité.   
 Faire du sport permet-il vraiment d’avoir de meilleurs résultats scolaires ?   
-Les asiatiques sont-vraiments meilleurs en maths ?   
+Les geeks sont-vraiments meilleurs en maths ?   
 Les fêtards sont-ils plus heureux que les autres ?   
 
 C’est ainsi que nous avons élaboré une liste de questions auxquelles nous allons essayer de répondre à l'aide du dataset.   
 
 Les questions étant les suivantes :   
 - Faire du sport permet-il vraiment d’avoir de meilleurs résultats scolaires ?   
-- Les asiatiques sont-vraiments meilleurs en maths ?   
-- Les fêtards sont-ils plus heureux que les autres ?   
-- Une bonne habitude alimentaire matinale entraîne-t-elle de meilleurs résultats sportifs ?   
-- Les problèmes parentaux ont-ils un lien avec la participation aux activités extra-scolaires ?   
-- Le plaisir sportif est-il lié au à la pratique du sport extra scolaire ?   
-- La satisfaction des clubs sportifs de l’école entraîne-t-elle plus de participation aux activités extra-scolaires ?   
-- Les problèmes de harcèlement scolaire antérieurs ou actuels entraînent-ils une consommation plus élevée d’alcool ? Tabac ? Drogue ?   
-- Les problèmes de harcèlement scolaire antérieurs ou actuels sont-ils liés au sexe ou a la couleur de peau ?   
-- La religion apporte-t-elle vraiment plus de bonheur ?   
-- Y-a-t-il un lien entre la pratique sportive et le fait d’être en couple ?   
-- L’utilisation de préservatifs est-elle liée à la dernière pratique sexuelle ?   
-- Les résultats scolaires ou la solitude ont-ils un lien sur la consommation d’alcool ou de tabac ?   
-- La sensibilisation aux armes / armes blanches est-elle liée aux revenus ?   
+- Les geeks sont-vraiments meilleurs en maths ?   
+- Les fêtards sont-ils plus heureux que les autres ?
+- La taille de la famille au foyer influe-t-elle sur les résultats scolaires ?
+- Le fait de sortir souvent avec des amis entraîne-t-il nécessairement une plus grande consommation d'alcool ?
+- Y-a-t-il un lien entre la consommation d'alcool et l'échec scolaire, l'absentéisme ?
+- De manière générale, lesquels des hommes ou des femmes ont de meilleurs résultats scolaires ?
+- Les hommes sont-ils plus fétards que les femmes ? Ou est-ce l'inverse ?
+- Avoir une mère au foyer pousse-t-il à avoir de bons résultats scolaires ?
+- Habiter loin de son lieu d'apprentissage réduit-il la fréquence de sorties avec des amis ?
+- Le niveau d'éducation des parents pousse-t-il les enfants à avoir de bons résultats scolaires ?
 
+Pour ce faire, nous allons comparer les résultats de nos différentes variables pour essayer de trouver des corrélations.
+Par exemple pour la question suivante : Faire du sport permet-il vraiment d’avoir de meilleurs résultats scolaires ?  
+
+Nous identifions les sportifs comme ceux ayant un niveau de santé supérieur ou égal à 3/5 et prenant part à des activités extra scolaires.  
+![image](https://github.com/IF36-visualisation/projet-if36-p24-rrrrrrr/assets/147445740/77a7aa27-4d43-443c-a6ee-fdf7e64d7986)
+
+
+Nous avons les résultats scolaires de chacun des étudiants à chaque période et au final, on peut donc en calculer une moyenne.
+![image](https://github.com/IF36-visualisation/projet-if36-p24-rrrrrrr/assets/147445740/f3058a2a-b10f-4d23-b539-5656e035bbb3)
+
+Nous comptons donc comparer directement les résultats scolaires des étudiants et leur sportivité pour savoir s'il y a réellement une corrélation.
+
+  
