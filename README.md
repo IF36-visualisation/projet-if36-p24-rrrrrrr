@@ -2,6 +2,8 @@
 
 ![_e755825b-9a0b-4d9f-8f7b-15b27b2c749c](https://github.com/IF36-visualisation/projet-if36-p24-rrrrrrr/assets/134507615/40029478-7fe4-4bb6-8101-9f2e9bb7f562)
 
+illustration générée à l'aide de Copilot
+
 # Analyse des conditions de vie des étudiants
 **Proposition projet IF36**
 
