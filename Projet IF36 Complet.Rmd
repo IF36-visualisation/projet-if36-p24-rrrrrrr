@@ -22,16 +22,14 @@ install.packages("xlsx")
 library(ggplot2)
 library(dplyr)
 library(readr)
-library(xlsx)
 
-tableMat <- read_csv("student-mat.csv")
+tableMat <- read_csv("./data/student-mat.csv")
 tableMat$MoyenneNote <- rowMeans(tableMat[,c("G1","G2","G3")])
-head(tableMat)
 ```
 
 
 ```{r ImportationPortugais, include=FALSE}
-tablePor <- read_csv("student-por.csv")
+tablePor <- read_csv("./data/student-por.csv")
 tablePor$MoyenneNote <- rowMeans(tablePor[,c("G1","G2","G3")])
 ```
 
