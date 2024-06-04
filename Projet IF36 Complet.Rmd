@@ -51,7 +51,7 @@ Il peut être intéressant de répondre aux questions que l'on se pose sous diff
 
 Pour ceci, on a donc besoin du troisième dataset qui joint les deux autres, on le nommera all_students.
 
-```{r,merge datasets}
+```{r,merge datasets, include=FALSE}
 all_students <- full_join(tableMat, 
                    tablePor,
                    by= c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","Mjob","Fjob","reason","guardian","traveltime","studytime","failures","schoolsup","famsup","paid","activities","nursery","higher","internet","romantic","famrel","freetime","goout","Dalc","Walc","health","absences","G1","G2","G3"))
@@ -89,7 +89,7 @@ tableMat_filtered <- tableMat1 %>% filter(goout > 4)
 ```
 
 
-```{r diagrammeRépartitionDalcWalc, fig.align='center'}
+```{r diagrammeRépartitionDalcWalc, fig.align='center', include=FALSE}
 
 #Personnes sortant beaucoup
 freq_dalc <- table(tableMat_filtered$Dalc)
@@ -182,7 +182,7 @@ Pour approfondir encore notre étude nous pouvons tenter d'observer une divergen
 
 ### Analyse de la consommation d'alcool chez les étudiants sortant fréquemment en fonction de leur sexe
 
-```{r diagrammeSexe, fig.align='center'}
+```{r diagrammeSexe, fig.align='center', include=FALSE}
 
 summary_data <- tableMat_filtered %>%
   group_by(Walc, sex) %>%
@@ -193,7 +193,7 @@ summary_data <- tableMat_filtered %>%
 ggplot(summary_data, aes(x = factor(Walc), y = count, fill = sex)) +
   geom_bar(stat = "identity", position = "stack") +
   labs(x = "Consommation d'alcool en semaine (Walc)", y = "Nombre d'individus", title = "Consommation d'alcool le week-end chez les personnes sortant souvent par sexe") +
-  scale_fill_manual(values = c("pink", "blue"), labels = c("Femme", "Homme")) +  # Définir les couleurs et les labels pour le sexe avec l'ordre correct
+  scale_fill_manual(values = c("green", "red"), labels = c("Femme", "Homme")) +  # Définir les couleurs et les labels pour le sexe avec l'ordre correct
   theme_minimal() 
 
 
@@ -206,7 +206,7 @@ summary_data <- tableMat_filtered %>%
 ggplot(summary_data, aes(x = factor(Dalc), y = count, fill = sex)) +
   geom_bar(stat = "identity", position = "stack") +
   labs(x = "Consommation d'alcool en semaine (Walc)", y = "Nombre d'individus", title = "Consommation d'alcool la semaine chez les personnes sortant souvent par sexe") +
-  scale_fill_manual(values = c("pink", "blue"), labels = c("Femme", "Homme")) +  # Définir les couleurs et les labels pour le sexe avec l'ordre correct
+  scale_fill_manual(values = c("green", "red"), labels = c("Femme", "Homme")) +  # Définir les couleurs et les labels pour le sexe avec l'ordre correct
   theme_minimal() 
 
 ```
@@ -228,7 +228,7 @@ Il est également possible de réaliser cette même étude en se penchant sur l'
 
 
 
-```{r diagrammeAge, fig.align='center'}
+```{r diagrammeAge, fig.align='center', include=FALSE}
 
 summary_data <- tableMat_filtered %>%
   group_by(Walc, age) %>%
@@ -281,7 +281,7 @@ Nous allons donc essayer de résoudre cette énigme en nous posant la question s
 
 Pour répondre à  cette question il faut donc tout d'abord identifier ce qu'est un sportif. Il nous a semblé concret d'identifier un sportif comme ayant un niveau de santé supérieur ou égal à  3/5 et participant à  des activités extra-scolaires.
 
-```{r Question 2 : Identifier les sportifs, fig.align='center'}
+```{r Question 2 : Identifier les sportifs, fig.align='center', include=FALSE}
 #Question 1 :
 #Faire du sport permet-il vraiment dâ€™avoir de meilleurs résultats scolaires ?
 all_students2 <- all_students
@@ -296,7 +296,7 @@ tableMat2$sportif <- ifelse(tableMat2$health >= 3 & tableMat2$activities == "yes
 
 Egalement, afin de comparer les résultats scolaires des étudiants, il nous faut une variable unique indiquant ces résultats. On a donc simplement créé la variable "mean_results", étant la moyenne des résultats scolaires des étudiants sur les 3 examens du semestre. Ne connaissant pas le poids de chacun des examens, nous avons posé une pondération linéaire : chacun des examens compte pour autant.
 
-```{r Question 2 : Voir les résultats moyens de chaque étudiants, fig.align='center'}
+```{r Question 2 : Voir les résultats moyens de chaque étudiants, fig.align='center', include=FALSE}
 #Question 1 :
 #Faire du sport permet-il vraiment dâ€™avoir de meilleurs résultats scolaires ?
 
@@ -318,7 +318,7 @@ Ensuite, pour ce qui est de la sportivité, représentons simplement d'une autre
 
 Enfin, traà§ons la moyenne des résultats scolaires pour "sportifs" et "non-sportifs" afin de voir s'il y a en effet une différence de niveau.
 
-```{r Question 2 : Visu 1 joint, fig.align='center'}
+```{r Question 2 : Visu 1 joint, fig.align='center', include=FALSE}
 #Question 1 :
 #Faire du sport permet-il vraiment dâ€™avoir de meilleurs résultats scolaires ?
 
@@ -336,7 +336,7 @@ On n'observe donc pas de résultats flagrants. On peut remettre aussi en questio
 
 Il semble donc nécessaire de regarder ce que l'on pourrait obtenir en ne regardant que individuellement les classes de mathématiques et de portugais et en gardant le même modèle de visualisation.
 
-```{r Question 2 : Visu 2 por, fig.align='center'}
+```{r Question 2 : Visu 2 por, fig.align='center', include=FALSE}
 #Question 1 :
 #Faire du sport permet-il vraiment dâ€™avoir de meilleurs résultats scolaires ?
 
@@ -348,7 +348,7 @@ ggplot(data = tablePor2, aes(x = health, y = mean_results_por)) +
   ggtitle("Résultats scolaires moyens en fonction de la santé et de la sportivité (Portugais)")
 ```
 
-```{r Question 2 : Visu 3 mat, fig.align='center'}
+```{r Question 2 : Visu 3 mat, fig.align='center', include=FALSE}
 #Question 1 :
 #Faire du sport permet-il vraiment dâ€™avoir de meilleurs résultats scolaires ?
 
@@ -370,7 +370,7 @@ Il faut donc essayer de trouver nouvel un angle d'approche à  notre étude. Sim
 
 Nous allons à  nouveau étudier la classe de portugais avec le même modèle puisque c'est celle qui nous donné les meilleurs résultats précedemment. Changeons simplement la variable "sportif" en la variable "goes_out" signifiant si oui ou non un étudiant pratique des activités extra-scolaires.
 
-```{r Question 2 : Visu 3 por - activities, fig.align='center'}
+```{r Question 2 : Visu 3 por - activities, fig.align='center', include=FALSE}
 #Question 1 :
 #Faire du sport permet-il vraiment dâ€™avoir de meilleurs résultats scolaires ?
 
@@ -430,7 +430,7 @@ Les notes de maths sont les variables :
 <br>- **G3** : note du troisième trimestre
 
 
-```{r distributionBoxplot, fig.align='center'}
+```{r distributionBoxplot, fig.align='center', include=FALSE}
 # Définir les critères pour considérer un étudiant comme geek
 data <- tableMat %>%
   mutate(geek = ifelse(activities == "no" & 
@@ -452,7 +452,7 @@ ggplot(data, aes(x = geek, y = moyenneNote)) +
 <br>Dans ce premier graphique on utilise un geom boxplot car il est utile pour se rendre compte de la distribution des moyennes et de la médiane dans chaque catégorie. On remarque que les geeks ont une moyenne légèrement plus élevée mais cela n'est pas significatif et peut-être dà» à  d'autre facteurs. Il y a aussi une valeur très en dessous des autres, cela peut être une valeur abérrante.
 
 
-```{r distributionViolin, fig.align='center'}
+```{r distributionViolin, fig.align='center', include=FALSE}
 # Créer un graphique pour comparer les notes 
 ggplot(data, aes(x = geek, y = moyenneNote)) +
   geom_violin(fill = "lightgreen") +
@@ -465,7 +465,7 @@ ggplot(data, aes(x = geek, y = moyenneNote)) +
 ```
 <br>Ce deuxième graphique est identique au précédent à  la différence qu'il est sous forme violon. Cela permet une meilleure estimation de la densité de moyenne pour une moyenne donnée. On remarque que pour les geeks la densité est la plus élevée autour de la médiane contrairement aux autres. On peut aussi remarquer anomalie pour les moyennes autour de 5. Cela montre une séparation en deux groupes parmi les geeks.
 
-```{r repartitionScatterplot, fig.align='center'}
+```{r repartitionScatterplot, fig.align='center', include=FALSE}
 # Créer un nuage de points pour visualiser les notes en mathématiques entre les geeks et les non-geeks
 ggplot(data, aes(x = geek, y = moyenneNote, color = geek)) +
   geom_point() +
@@ -477,7 +477,7 @@ ggplot(data, aes(x = geek, y = moyenneNote, color = geek)) +
 <br>Sur ce troisième graphique, on a décidé d'afficher chaque moyenne de manière individuelle pour pouvoir mieux se rendre compte de la répartition des notes. On remarque instantanément qu'il y a une grande différence d'échantillon parmi les deux catégories traitées. C'est est une première limite liée à  cette analyse de données.
 Nous pouvons quand même dire que les données affichées sont cohérentes avec les deux premiers graphiques. On distingue bien deux groupes ainsi que la médiane.
 
-```{r quantitePersonnes, fig.align='center'}
+```{r quantitePersonnes, fig.align='center', include=FALSE}
 count_data <- data %>%
   count(geek)
 
@@ -491,7 +491,7 @@ ggplot(count_data, aes(x = geek, y = n)) +
 ```
 <br>Sur ce dernier graphique, on a décidé de compter le nombre de personnes dans chaque catégorie. On remarque que le nombre de non-geeks est beaucoup plus élevé que le nombre de geek (facteur 35). Cela est une limite à  notre analyse car les résultats ne sont pas exploitables sur un si petit échantillonnage.
 
-```{r repartitionHommeFemme, fig.align='center'}
+```{r repartitionHommeFemme, fig.align='center', include=FALSE}
 # Créer un tableau croisé pour compter le nombre d'hommes et de femmes dans chaque catégorie
 gender_counts <- table(data$geek, data$sex)
 
@@ -512,7 +512,7 @@ ggplot(gender_df, aes(x = Catégorie, y = Count, fill = Sexe)) +
 ```
 <br>Sur ce graphique, on a décidé de compter le nombre d'hommes et de femmes dans chaque catégorie. On remarque que le nombre d'homme et de femme sont équivalents dans chaque catégorie. Donc cet aspect de l'analyse n'a pas d'importance.
 
-```{r moyeneHommeFemme, fig.align='center'}
+```{r moyeneHommeFemme, fig.align='center', include=FALSE}
 means <- data %>%
   group_by(sex) %>%
   summarise(mean_math_score = mean(moyenneNote))
@@ -557,7 +557,7 @@ Donc, d'après ce dataset, la conclusion est que les geeks n'ont pas de meilleur
 
 ## Question 4:  Y-a-t-il un lien entre la consommation d'alcool et l'échec scolaire, l'absentéisme ?
 
-```{r RedefintionMat, include=FALSE, fig.align='center'}
+```{r RedefintionMat, include=FALSE, fig.align='center', include=FALSE}
 
 #Je n'ai maintenant que besoin de failures, Dalc, Walc, MoyenneNote donc je garde les colonnes qui m'interesse pour économiser les traitements
 tableMat4 <- tableMat[,c("failures","Dalc","Walc","MoyenneNote")]
@@ -590,7 +590,7 @@ Les données qui m'interessent pour répondre à  cette question sont :
 
 
 
-```{r diagrammeConsoAlcoolMat, fig.align='center'}
+```{r diagrammeConsoAlcoolMat, fig.align='center', include=FALSE}
 ggplot(data = tableMat, aes(x = factor(Dalc), y = MoyenneNote)) +
   geom_violin() +
   stat_summary(fun = median, geom = "errorbar", aes(ymin = after_stat(y), ymax = after_stat(y), color = "Médiane"), width = 0.5, linetype = "dashed") + 
@@ -634,7 +634,7 @@ Comparons avec les notes en portugais oà¹ il y a deux fois plus d'individu par
 | 4                                | 17                  |
 | 5                                | 17                  |
 
-```{r diagrammeConsoAlcoolPort, fig.align='center'}
+```{r diagrammeConsoAlcoolPort, fig.align='center', include=FALSE}
 ggplot(data = tablePor, aes(x = factor(Dalc), y = MoyenneNote)) +
   geom_violin() +
   stat_summary(fun = median, geom = "errorbar", aes(ymin = after_stat(y), ymax = after_stat(y), color = "Médiane"), width = 0.5, linetype = "dashed") + 
@@ -654,7 +654,7 @@ Nous nous attendions à  des résultats beaucoup plus significatifs. Il est fort
 On va donc visualiser les catégories de consommation d'alcool 1 et 2 ensembles et les catégories 4 et 5 ensembles pour observer un résultat qui tiendrait compte de ce biais.
 
 
-```{r diagrammePortugaisRassemblement, fig.align='center'}
+```{r diagrammePortugaisRassemblement, fig.align='center', include=FALSE}
 tablePor$GroupedDalc <- factor(ifelse(tablePor$Dalc %in% c(1, 2), "1-2", ifelse(tablePor$Dalc %in% c(4, 5), "4-5", tablePor$Dalc)))
 
 ggplot(data = tablePor, aes(x = GroupedDalc, y = MoyenneNote)) +
@@ -685,7 +685,7 @@ On peut maintenant tisser une relation entre ceux qui consomme le plus et ceux q
 On peut également se poser la question du redoublement des personnes qui consomment le plus d'alcool. En effet, les personnes, qui consomment le plus, sont peut-être ceux qui ont déjà  redoublé. Si c'est le cas, on pourrait s'interroger sur le rà´le du redoublement dans la moyenne de leurs notes actuelles.
 
 
-```{r diagrammeRedoublementComparaison, fig.align='center'}
+```{r diagrammeRedoublementComparaison, fig.align='center', include=FALSE}
 proportions_redoublement <- tablePor %>%
   group_by(Dalc) %>%
   summarise(Total = n(),
