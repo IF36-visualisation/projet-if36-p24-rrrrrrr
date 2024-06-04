@@ -191,7 +191,7 @@ summary_data <- tableMat_filtered %>%
 ggplot(summary_data, aes(x = factor(Walc), y = count, fill = sex)) +
   geom_bar(stat = "identity", position = "stack") +
   labs(x = "Consommation d'alcool en semaine (Walc)", y = "Nombre d'individus", title = "Consommation d'alcool le week-end chez les personnes sortant souvent par sexe") +
-  scale_fill_manual(values = c("green", "red"), labels = c("Femme", "Homme")) +  # Définir les couleurs et les labels pour le sexe avec l'ordre correct
+  scale_fill_manual(values = c("yellow3", "mediumpurple"), labels = c("Femme", "Homme")) +  # Définir les couleurs et les labels pour le sexe avec l'ordre correct
   theme_minimal() 
 
 
@@ -204,7 +204,7 @@ summary_data <- tableMat_filtered %>%
 ggplot(summary_data, aes(x = factor(Dalc), y = count, fill = sex)) +
   geom_bar(stat = "identity", position = "stack") +
   labs(x = "Consommation d'alcool en semaine (Walc)", y = "Nombre d'individus", title = "Consommation d'alcool la semaine chez les personnes sortant souvent par sexe") +
-  scale_fill_manual(values = c("green", "red"), labels = c("Femme", "Homme")) +  # Définir les couleurs et les labels pour le sexe avec l'ordre correct
+  scale_fill_manual(values = c("yellow3", "mediumpurple"), labels = c("Femme", "Homme")) +  # Définir les couleurs et les labels pour le sexe avec l'ordre correct
   theme_minimal() 
 
 ```
@@ -505,7 +505,7 @@ ggplot(gender_df, aes(x = Catégorie, y = Count, fill = Sexe)) +
        x = "Catégorie",
        y = "Nombre d'étudiants",
        fill = "Sexe") +
-  scale_fill_manual(values = c("pink", "lightblue")) +  # Couleurs pour les hommes (bleu) et les femmes (rose)
+  scale_fill_manual(values = c("yellow3", "mediumpurple")) +  # Couleurs pour les hommes (bleu) et les femmes (rose)
   theme_minimal()
 ```
 <br>Sur ce graphique, on a décidé de compter le nombre d'hommes et de femmes dans chaque catégorie. On remarque que le nombre d'homme et de femme sont équivalents dans chaque catégorie. Donc cet aspect de l'analyse n'a pas d'importance.
@@ -523,7 +523,7 @@ ggplot(means, aes(x = sex, y = mean_math_score, fill = sex)) +
        x = "Sexe",
        y = "Moyenne des notes en mathématiques",
        fill = "Sexe") +
-  scale_fill_manual(values = c("green", "red")) +  # Couleurs pour les hommes (bleu) et les femmes (rose)
+  scale_fill_manual(values = c("yellow3", "mediumpurple")) +  # Couleurs pour les hommes (bleu) et les femmes (rose)
   theme_minimal()
 
 ```
@@ -703,7 +703,7 @@ ggplot(data = proportions_redoublement, aes(x = factor(Dalc), y = PourcentageRed
 
 On remarque que notre hypothèse a été validé. Il y a bien plus de redoublement proportionnellement pour une plus grande consommation d'alcool. Ce qui peut compenser, le fait que la médiane des moyennes des notes sur les groupes 4 et 5 ne soit pas énormément inférieur à  la médiane des moyennes des notes des groupes 1 et 2.
 
-```{r correlationEtudeMere, fig.align='center'}
+```{r correlationEtudeMere, fig.align='center', echo=FALSE}
  
 
 
@@ -732,7 +732,7 @@ ggplot(df, aes(x = Medu, y = moyenne_notes)) +
   theme_minimal()
 
 ```
-```{r correlationEtudePere, fig.align='center'}
+```{r correlationEtudePere, fig.align='center', echo=FALSE}
 
 # Visualiser la relation entre le niveau d'éducation du père et les résultats scolaires des enfants
 ggplot(df, aes(x = Fedu, y = moyenne_notes)) +
@@ -743,7 +743,7 @@ ggplot(df, aes(x = Fedu, y = moyenne_notes)) +
   theme_minimal()
 
 ``` 
-```{r correlationEtudeParent, fig.align='center'}
+```{r correlationEtudeParent, fig.align='center', echo=FALSE}
 
 
 
