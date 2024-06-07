@@ -796,3 +796,90 @@ Enfin, nous avons pu voir que les enfants dont les deux parents ont un niveau d'
 Toutes ces données nous amènent à penser que le postulat réalisé au début de l'enquête est vrai. Le niveau d'études des parents a un réel impact sur les résultats scolaires de l'enfant. Cela peut s'expliquer par le fait que les parents ayant un niveau d'étude élevé ont plus de connaissances et de compétences pour aider leurs enfants dans leurs études. De plus, ils ont souvent une meilleure situation financière qui leur permet de mettre leurs enfants dans de bonnes écoles et de leur offrir des cours particuliers. Enfin, les parents ayant un niveau d'étude élevé ont souvent une meilleure culture générale et une meilleure compréhension des enjeux de l'éducation, ce qui les pousse à encourager leurs enfants à réussir dans leurs études.
 
 Mais cette analyse a aussi des limites. En effet, le niveau d'étude des parents n'est pas le seul facteur qui influence les résultats scolaires des enfants. D'autres facteurs comme le niveau socio-économique de la famille, le niveau d'éducation des enseignants, le niveau de motivation des enfants, le climat scolaire, etc. peuvent aussi avoir un impact sur les résultats scolaires des enfants. Il faudrait donc prendre en compte tous ces facteurs pour avoir une vision plus complète de la situation.
+
+
+## Question 6:  Les étudiants vivant dans un milieu rural sont-ils voués à rester dans leur campagne ?
+
+
+La potentielle existence d'une différence de vie entre les personnes vivant en ville et celles à la campagne est fréquemment le sujet de débats. Dans cette partie de notre projet explorartoire nous allons nous concentrer sur la manière dont les étudiants de milieux ruraux et urbains appréhendent les études supérieures et le choix de leur école. Cette thématique est pertinente car nous savons que les jeunes ayant grandi il y a plusieurs décennies dans les campagnes étaient d'une certaine manière condamnés à y rester et à reprendre la profession de leurs parents. Ce phénomène est-il rest inchangé ou, au contraire, est-il devenu obsolète depuis?
+
+Pour répondre à cette problématique nous allons nous concentrer sur certaines features fournies dans le dataset:
+- **Address** :type d'adresse du domicile de l'étudiant (binaire : 'U' pour urbain ou 'R' pour rural)
+- **Traveltime** : temps de trajet domicile-école (numérique : 1 - <15 min., 2 - 15 à 30 min., 3 - 30 min. à 1 heure, ou 4 - >1 heure)
+- **Higher** : souhaite poursuivre une éducation supérieure (binaire : oui ou non)
+- **Reason** :raison de choisir cette école (nominal : proche de 'home', réputation de l'école, préférence de 'course' ou 'other')
+
+Tout d'abord, il semble évident de vouloir savoir si les jeunes vivant en milieu rural s'intéressent à la poursuite d'études en supérieur. Il semble également pertinent de comparer la réponse récoltée avec celle qu'auraient proposé les jeunes vivant en milieu urbain.
+
+```{r higerAdress, fig.align='center', echo=FALSE}
+# Charger le dataset
+data <- all_students[,c("address","traveltime","higher","reason")]
+
+# Calculer les pourcentages par rapport au total des étudiants pour chaque valeur de address
+df_summary <- data %>%
+  group_by(higher, address) %>%
+  summarise(count = n(), .groups = 'drop') %>%
+  ungroup() %>%
+  group_by(address) %>%
+  mutate(total = sum(count)) %>%
+  mutate(percentage = count / total * 100)
+
+# Création du barplot avec ggplot2
+ggplot(df_summary, aes(x = higher, y = percentage, fill = address)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Pourcentage d'étudiants souhaitant poursuivre une éducation supérieure en fonction de leur milieu de vie",
+       x = "Souhaite poursuivre une éducation supérieure",
+       y = "Pourcentage",
+       fill = "Milieu de vie") +
+  theme_minimal()
+
+```
+
+Nous constatons un intérêt pour les études supérieures légèrement plus faible dans les milieux ruraux que dans les milieux urbains. Cela montre directement une forte différence avec la situation que nos grands-parents vivant en milieu rural ont connu. En effet, les jeunes ont désormais, notamment grâce à internet, une connaissance beaucoup plus poussée des possibilités qui leurs sont offertes hors de leur campagne.
+Même si l'intérêt pour les études supérieures semblent identiques en milieu rural qu'en milieu urbain, il serait pertinent de s'interroger sur les facteurs pouvant causer le faible écart que nous avons rencontré.
+
+Pour cela, nous allons tenter de lier les features  **Reason** et  **Traveltime** afin de découvrir ce qui motiverait les jeunes à rejoindre une école et s'ils sont prêts à faire plus de distance chaque jour pour la rejoindre.
+
+```{r reasonAdress, fig.align='center', echo=FALSE}
+
+# Calculer les pourcentages pour chaque raison au sein de chaque type d'adresse
+data_percent <- data %>%
+  group_by(address, reason) %>%
+  summarise(count = n(), .groups = 'drop') %>%
+  ungroup() %>%
+  group_by(address) %>%
+  mutate(total = sum(count)) %>%
+  mutate(percent = count / total * 100)
+
+# Créer le graphique à barres empilées
+ggplot(data_percent, aes(x = address, y = percent, fill = reason)) +
+  geom_bar(stat = "identity", position = "fill") +
+  labs(title = "Répartition en pourcentage des raisons pour chaque type d'adresse",
+       x = "Type d'adresse",
+       y = "Pourcentage",
+       fill = "Raison") +
+  scale_y_continuous(labels = scales::percent) +
+  theme_minimal()
+
+
+```
+
+```{r traveltimeAdress, fig.align='center', echo=FALSE}
+
+ggplot(data, aes(x = address, y = traveltime)) +
+  geom_violin() +
+  stat_summary(fun = median, geom = "errorbar", aes(ymin = after_stat(y), ymax = after_stat(y), color = "Médiane"), width = 0.5, linetype = "dashed") + 
+  scale_color_manual(values = "red", name = "Légende", labels = "Médiane") +
+  labs(x = "Milieu de vie", y = "Temps de trajet domcile - école",title = "Répartition du temps de trajet domcile - école en fonction du milieu de vie") +
+  theme_minimal() +
+  theme(plot.title = element_text(size=11,face="bold"))  
+
+```
+
+Nous constatons plusieurs phénomènes notables sur ces graphiques.
+Tout d'abord, que ce soit en milieu rural ou en milieu urbain, la raison de choisir une école par les étudiants est loin d'être unanime. En effet, tandisque certains privilégient les cours proposés dans l'école, d'autres donnent de l'importance à la proximité avec leur lieu de vie, à la réputation de l'école ou à autre chose.
+Une similitude existe entre le choix des étudiants ruraux et celui des étudiants urbains. Des deux côtés environ 25% des étudiants choisissent leur école en fonction de la réputation. Cela permet au passage de déconstruire le mythe que les écoles réputées sont réservées aux étudiants vivant dans les grandes villes.
+Toutefois, certaines proportions varient. La part d'étudiant choisissant leur école en fonction de sa proximité avec leur lieu de vie est plus faible dans les milieux ruraux. Or nous savons que la densité d'écoles est plus faible en milieu rural qu'en milieu urbain. En effet, au Portugal (car notre dataset provient de ce pays), il existe 5 écoles pour 1000 enfants en milieu urbain contre 1,5 écoles pour 1000 enfants en milieu rural. Cela prouve bien que les étudiants vivant en campagne sont prêts à s'éloigner de chez eux afin de privilégier leur éducation scolaire. Le graphique représentant la répartition du temps de trajet domcile - école en fonction du milieu de vie confirme cette idée en prouvant que les étudiants vivant en milieu rural mettent quotidiennement plus de temps pour rejoindre leur école que les étudiants vivant en ville. 
+Enfin, la proximité avec le domicile est le critère le moins important dans le choix de leur école pour les étudiants vivant en milieu rural. Ils privilégient la réputation, les cours proposés ou autre chose. Cela prouve que, de nos jours, les étudiants ayant grandi en campagne s'ouvrent aux opportunités existantes plus loin de chez eux et préfèrent en sortir pour obtenir la meilleure éducation scolaire possible. Cette progression par rapport à la situation qu'ont connu nos grands-parents en milieu rural a principalement été possible grâce à la démocratisation d'internet, des moyens de transport et de l'accès aux grandes écoles.
+
+
