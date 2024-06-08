@@ -53,6 +53,8 @@ Pour ceci, on a donc besoin du troisième dataset qui joint les deux autres, on 
 all_students <- full_join(tableMat, 
                    tablePor,
                    by= c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","Mjob","Fjob","reason","guardian","traveltime","studytime","failures","schoolsup","famsup","paid","activities","nursery","higher","internet","romantic","famrel","freetime","goout","Dalc","Walc","health","absences","G1","G2","G3"))
+all_students$MoyenneNote <- rowMeans(all_students[,c("G1","G2","G3")])
+all_students <- mutate(all_students, generalsup=ifelse(grepl("yes",schoolsup) | grepl("yes","famsup"),"yes",famsup))
 ```
 
 
