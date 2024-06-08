@@ -89,7 +89,10 @@ tableMat_filtered <- tableMat1 %>% filter(goout > 4)
 
 ```{r diagrammeRépartitionDalcWalc, fig.align='center', echo=FALSE}
 
-#Personnes sortant beaucoup
+library(ggplot2)
+library(dplyr)
+
+# Data preparation pour les personnes sortant beaucoup
 freq_dalc <- table(tableMat_filtered$Dalc)
 total <- sum(freq_dalc)
 freq_dalc <- (freq_dalc / total) * 100
@@ -98,33 +101,11 @@ freq_walc <- table(tableMat_filtered$Walc)
 total_walc <- sum(freq_walc)
 freq_walc <- (freq_walc / total_walc) * 100
 
-
 notes <- c(1, 2, 3, 4, 5)
-df_dalc <- data.frame(notes = factor(notes), frequences = freq_dalc)
-df_walc <- data.frame(notes = factor(notes), frequences = freq_walc)
+df_dalc <- data.frame(notes = factor(notes), frequences = as.numeric(freq_dalc))
+df_walc <- data.frame(notes = factor(notes), frequences = as.numeric(freq_walc))
 
-
-ggplot(df_dalc, aes(x = "", y = freq_dalc, fill = notes, label = paste0(round(freq_dalc, 1), "%"))) +
-  geom_bar(stat = "identity") +
-  geom_text(position = position_stack(vjust = 0.5)) + # Ajouter les pourcentages centrés
-  coord_flip() +
-  labs(x = "", y = "Proportions", title = "Notes de consommation d'alcool en semaine chez les personnes sortant souvent") +
-  theme_minimal() +
-  scale_fill_brewer(palette = "YlOrRd")
-
-
-ggplot(df_walc, aes(x = "", y = freq_walc, fill = notes, label = paste0(round(freq_walc, 1), "%"))) +
-  geom_bar(stat = "identity") +
-  geom_text(position = position_stack(vjust = 0.5)) + # Ajouter les pourcentages centrés
-  coord_flip() +
-  labs(x = "", y = "Proportions", title = "Notes de consommation d'alcool le week-end chez les personnes sortant souvent") +
-  theme_minimal() +
-  scale_fill_brewer(palette = "YlOrRd")
-
-
-
-#personnes ne sortant pas beaucoup
-
+# Data preparation pour les personnes sortant peu
 tableMat_filtered_inf <- tableMat %>% filter(goout < 4)
 
 freq_dalc_inf <- table(tableMat_filtered_inf$Dalc)
@@ -135,26 +116,30 @@ freq_walc_inf <- table(tableMat_filtered_inf$Walc)
 total_walc_inf <- sum(freq_walc_inf)
 freq_walc_inf <- (freq_walc_inf / total_walc_inf) * 100
 
+df_dalc_inf <- data.frame(notes = factor(notes), frequences = as.numeric(freq_dalc_inf))
+df_walc_inf <- data.frame(notes = factor(notes), frequences = as.numeric(freq_walc_inf))
 
-df_dalc_inf <- data.frame(notes = factor(notes), frequences = freq_dalc_inf)
-df_walc_inf <- data.frame(notes = factor(notes), frequences = freq_walc_inf)
+# Combinaison des 4 graphiques dans un seul pour plus de visibilité
+df_dalc$type <- "Consommation en semaine - Sortant beaucoup"
+df_walc$type <- "Consommation le week-end - Sortant beaucoup"
+df_dalc_inf$type <- "Consommation en semaine - Sortant peu"
+df_walc_inf$type <- "Consommation le week-end  - Sortant peu"
 
-ggplot(df_dalc_inf, aes(x = "", y = freq_dalc_inf, fill = notes, label = paste0(round(freq_dalc_inf, 1), "%"))) +
+combined_df <- bind_rows(df_dalc, df_walc, df_dalc_inf, df_walc_inf)
+
+str(combined_df)
+head(combined_df)
+
+# Création du graphique général
+ggplot(combined_df, aes(x = "", y = frequences, fill = notes, label = paste0(round(frequences, 1), "%"))) +
   geom_bar(stat = "identity") +
-  geom_text(position = position_stack(vjust = 0.5)) + # Ajouter les pourcentages centrés
+  geom_text(position = position_stack(vjust = 0.5)) + # Add centered percentages
   coord_flip() +
-  labs(x = "", y = "Proportions", title = "Notes de consommation d'alcool en semaine chez les personnes sortant peu") +
+  labs(x = "", y = "Proportions") +
   theme_minimal() +
-  scale_fill_brewer(palette = "YlOrRd")
-
-
-ggplot(df_walc_inf, aes(x = "", y = freq_walc_inf, fill = notes, label = paste0(round(freq_walc_inf, 1), "%"))) +
-  geom_bar(stat = "identity") +
-  geom_text(position = position_stack(vjust = 0.5)) + # Ajouter les pourcentages centrés
-  coord_flip() +
-  labs(x = "", y = "Proportions", title = "Notes de consommation d'alcool le week-end chez les personnes sortant peu") +
-  theme_minimal() +
-  scale_fill_brewer(palette = "YlOrRd")
+  scale_fill_brewer(palette = "YlOrRd") +
+  facet_wrap(~ type, scales = "free_y") + # Facet by type
+  theme(plot.title = element_text(hjust = 0.5))
 
 ```
 
@@ -590,7 +575,7 @@ Les données qui m'interessent pour répondre à  cette question sont :
 
 ```{r diagrammeConsoAlcoolMat, fig.align='center', echo=FALSE}
 ggplot(data = tableMat, aes(x = factor(Dalc), y = MoyenneNote)) +
-  geom_violin() +
+   geom_violin(fill = "lightgreen")  +
   stat_summary(fun = median, geom = "errorbar", aes(ymin = after_stat(y), ymax = after_stat(y), color = "Médiane"), width = 0.5, linetype = "dashed") + 
   scale_color_manual(values = "red", name = "Légende", labels = "Médiane") +
   labs(x = "Consommation d'alcool en semaine", y = "Moyenne des notes en math sur les trois semestres") +
@@ -634,7 +619,7 @@ Comparons avec les notes en portugais oà¹ il y a deux fois plus d'individu par
 
 ```{r diagrammeConsoAlcoolPort, fig.align='center', echo=FALSE}
 ggplot(data = tablePor, aes(x = factor(Dalc), y = MoyenneNote)) +
-  geom_violin() +
+   geom_violin(fill = "lightgreen")  +
   stat_summary(fun = median, geom = "errorbar", aes(ymin = after_stat(y), ymax = after_stat(y), color = "Médiane"), width = 0.5, linetype = "dashed") + 
   scale_color_manual(values = "red", name = "Légende", labels = "Médiane") +
   labs(x = "Consommation d'alcool en semaine", y = "Moyenne des notes en math sur les trois semestres",title = "Répartition de la moyenne des notes en portugais par niveau de consommation d'alcool") +
@@ -656,7 +641,7 @@ On va donc visualiser les catégories de consommation d'alcool 1 et 2 ensembles 
 tablePor$GroupedDalc <- factor(ifelse(tablePor$Dalc %in% c(1, 2), "1-2", ifelse(tablePor$Dalc %in% c(4, 5), "4-5", tablePor$Dalc)))
 
 ggplot(data = tablePor, aes(x = GroupedDalc, y = MoyenneNote)) +
-  geom_violin() +
+  geom_violin(fill = "lightgreen") +
   stat_summary(fun = median, geom = "errorbar", aes(ymin = after_stat(y), ymax = after_stat(y), color = "Médiane"), width = 0.5, linetype = "dashed") +
   scale_color_manual(values = "red", name = "Légende", labels = "Médiane") +
   labs(x = "Consommation d'alcool en semaine", y = "Moyenne des notes en portugais sur les trois semestres",title ="Répartition de la moyenne des notes en portugais par niveau de consommation d'alcool regroupé") +
@@ -867,7 +852,7 @@ ggplot(data_percent, aes(x = address, y = percent, fill = reason)) +
 ```{r traveltimeAdress, fig.align='center', echo=FALSE}
 
 ggplot(data, aes(x = address, y = traveltime)) +
-  geom_violin() +
+  geom_violin(fill = "lightgreen") +
   stat_summary(fun = median, geom = "errorbar", aes(ymin = after_stat(y), ymax = after_stat(y), color = "Médiane"), width = 0.5, linetype = "dashed") + 
   scale_color_manual(values = "red", name = "Légende", labels = "Médiane") +
   labs(x = "Milieu de vie", y = "Temps de trajet domcile - école",title = "Répartition du temps de trajet domcile - école en fonction du milieu de vie") +
@@ -881,5 +866,4 @@ Tout d'abord, que ce soit en milieu rural ou en milieu urbain, la raison de choi
 Une similitude existe entre le choix des étudiants ruraux et celui des étudiants urbains. Des deux côtés environ 25% des étudiants choisissent leur école en fonction de la réputation. Cela permet au passage de déconstruire le mythe que les écoles réputées sont réservées aux étudiants vivant dans les grandes villes.
 Toutefois, certaines proportions varient. La part d'étudiant choisissant leur école en fonction de sa proximité avec leur lieu de vie est plus faible dans les milieux ruraux. Or nous savons que la densité d'écoles est plus faible en milieu rural qu'en milieu urbain. En effet, au Portugal (car notre dataset provient de ce pays), il existe 5 écoles pour 1000 enfants en milieu urbain contre 1,5 écoles pour 1000 enfants en milieu rural. Cela prouve bien que les étudiants vivant en campagne sont prêts à s'éloigner de chez eux afin de privilégier leur éducation scolaire. Le graphique représentant la répartition du temps de trajet domcile - école en fonction du milieu de vie confirme cette idée en prouvant que les étudiants vivant en milieu rural mettent quotidiennement plus de temps pour rejoindre leur école que les étudiants vivant en ville. 
 Enfin, la proximité avec le domicile est le critère le moins important dans le choix de leur école pour les étudiants vivant en milieu rural. Ils privilégient la réputation, les cours proposés ou autre chose. Cela prouve que, de nos jours, les étudiants ayant grandi en campagne s'ouvrent aux opportunités existantes plus loin de chez eux et préfèrent en sortir pour obtenir la meilleure éducation scolaire possible. Cette progression par rapport à la situation qu'ont connu nos grands-parents en milieu rural a principalement été possible grâce à la démocratisation d'internet, des moyens de transport et de l'accès aux grandes écoles.
-
 
