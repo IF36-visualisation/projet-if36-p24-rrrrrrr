@@ -867,3 +867,80 @@ Une similitude existe entre le choix des étudiants ruraux et celui des étudian
 Toutefois, certaines proportions varient. La part d'étudiant choisissant leur école en fonction de sa proximité avec leur lieu de vie est plus faible dans les milieux ruraux. Or nous savons que la densité d'écoles est plus faible en milieu rural qu'en milieu urbain. En effet, au Portugal (car notre dataset provient de ce pays), il existe 5 écoles pour 1000 enfants en milieu urbain contre 1,5 écoles pour 1000 enfants en milieu rural. Cela prouve bien que les étudiants vivant en campagne sont prêts à s'éloigner de chez eux afin de privilégier leur éducation scolaire. Le graphique représentant la répartition du temps de trajet domcile - école en fonction du milieu de vie confirme cette idée en prouvant que les étudiants vivant en milieu rural mettent quotidiennement plus de temps pour rejoindre leur école que les étudiants vivant en ville. 
 Enfin, la proximité avec le domicile est le critère le moins important dans le choix de leur école pour les étudiants vivant en milieu rural. Ils privilégient la réputation, les cours proposés ou autre chose. Cela prouve que, de nos jours, les étudiants ayant grandi en campagne s'ouvrent aux opportunités existantes plus loin de chez eux et préfèrent en sortir pour obtenir la meilleure éducation scolaire possible. Cette progression par rapport à la situation qu'ont connu nos grands-parents en milieu rural a principalement été possible grâce à la démocratisation d'internet, des moyens de transport et de l'accès aux grandes écoles.
 
+# Question 7 : Travailler plus pour gagner plus?
+
+### Partie exploration
+
+Le bon sens voudrait que ceux qui travaillent le plus soient ceux qui ont les meilleurs résultats. Tout de même, nous somme curieux de vérifier cette hypothèse. 
+Pour analyser cette hypothèse, nous allons avoir besoin des données suivantes :
+
+- **studytime** : temps d'étude hebdomadaire (numérique : 1 - <2 heures, 2 - 2 à 5 heures, 3 - 5 à 10 heures, ou 4 - >10 heures)
+- **schoolsup** : soutien éducatif supplémentaire (binaire : oui ou non)
+- **famsup** : soutien éducatif familial (binaire : oui ou non)
+- **paid** : cours supplémentaires payants dans la matière du cours (Mathématiques ou Portugais) (binaire : oui ou non)
+- **MoyenneNote** : qui est la moyenne que nous avons calculée en faisant la moyenne des notes des 3 trimestres
+  - G1 : note du premier trimestre (numérique : de 0 à  20)
+  - G2 : note du deuxième trimestre (numérique : de 0 à  20)
+  - G3 : note finale (numérique : de 0 à  20, cible de sortie)
+
+Commençons simplement par une répartition de la moyenne des notes en fonction du temps d'étude hebdomadaire:
+
+
+```{r diagramNoteTempsEtude, fig.align='center', echo=FALSE}
+ggplot(data = all_students, aes(x = factor(studytime), y = MoyenneNote,fill=factor(studytime))) +
+  geom_boxplot() +
+  labs(x = "Temps d'étude hebdomadaire", y = "Moyenne des notes sur les trois semestres") +
+  scale_fill_manual(
+    name = "Temps d'étude hebdomadaire", 
+    values = c("lightblue", "lightgreen", "pink", "orange"),
+    labels = c("1 à 2 heures","2 à 5 heures","5 à 10 heures","plus de 10 heures")
+  ) +
+  theme_minimal() +
+  ggtitle("Répartition des notes en fonction du temps d'étude hebdomadaire")+
+  theme(legend.position = "right")  
+
+```
+Parmis les trois catégories, on remarque des répartitions différentes. La médiane de la moyenne des résultats de la première catégorie de temps d'étude augmente d'environ deux points par rapport à la première catégorie (de 1 heure à 10 heures de temps d'étude). En revanche, la quatrième catégorie à une médiane plus faible que la troisième. 
+
+On peut donc constater que, plus les individus travaillent, plus il devient probable qu'ils aient de meilleurs résultats. Cepedant, le nombre d'heures de travail n'est pas le seul paramètre dans la réussite des élèves. Si cela avait été le cas, l'écart entre les différentes catégories aurait été proportionnel à la différence de temps d'étude. Or, ce n'est pas le cas, comme le montre la dernière catégorie.
+
+Un facteur intéressant à ajouter à l'analyse est la part de l'aide du soutien éducatif dans la réussite scolaire de l'élève. Pour observer l'impact de ce facteur, j'ai créé une autre colonne appelée "generalsup" qui correspond à l'opérateur logique "OR" des deux colonnes : "famsup" (soutient scolaire familiale) et "studysup" (soutient scolaire à l'école). C'est-à-dire que si au moins une des colonnes a un "yes", alors "generalsup" prendra la valeur de "yes". Cette colonne rassemble donc tout les élèves qui participe à des cours de soutient scolaire.
+
+
+```{r diagSoutientScolaireReussite, fig.align='center', echo=FALSE}
+ggplot(data = all_students, aes(x = factor(generalsup), y = MoyenneNote,fill=factor(generalsup))) +
+  geom_boxplot() +
+  labs(x = "Soutien scolaire", y = "Moyenne des notes sur les trois semestres") +
+  scale_fill_manual(
+    name = "Soutien scolaire", 
+    values = c("red", "blue"),
+    labels = c("non","oui")
+  ) +
+  theme_minimal() +
+  ggtitle("Répartition des notes en fonction du soutient scolaire")+
+  theme(legend.position = "right")  
+
+```
+Statistiquement, les étudiants qui n'assistent pas à du soutien scolaire ont un niveau équivalent à ceux qui assistent à du soutien scolaire. À première vue, ce résultat semble contre-intuitif. Cela voudrait-il dire que le soutien scolaire ne sert à rien ? En fait, nous pensons que ce résultat surprenant s'explique par les motifs de prendre du soutien scolaire. En effet, nous pensons que le soutien scolaire n'est pas vraiment culturel, c'est-à-dire qu'il ne sert pas de tremplin pour avoir de bien meilleures notes, mais qu'il est vu comme un moyen d'obtenir des résultats corrects. Cette théorie s'appuie sur le fait que plus de 3/4 de l'échantillon qui prend du soutien scolaire a une moyenne en dessous de 13.
+
+Les données qui auraient été intéressantes à avoir pour une analyse plus poussée de l'influence du soutien scolaire seraient un détail des résultats avant, puis pendant le soutien scolaire. En effet, nous ne pouvons pas savoir ici si les étudiants (avec et sans soutien scolaire) avaient le même niveau scolaire à l'origine, car ceux qui suivent du soutien scolaire cherchent peut-être à rattraper leurs lacunes acquises auparavant sans soutien scolaire.
+
+
+Un autre élément intéressant dans l'analyse des résultats scolaires est l'investissement pécuniaire. Faut-il payer plus pour gagner plus tard davantage ? Est-ce que ceux qui prennent des cours particuliers payants ont de meilleurs résultats que les autres ?
+
+```{r diagPayantScolaireReussite, fig.align='center', echo=FALSE}
+ggplot(data = all_students, aes(x = factor(paid), y = MoyenneNote,fill=factor(paid))) +
+  geom_boxplot() +
+  labs(x = "Cours particulier payant", y = "Moyenne des notes sur les trois semestres") +
+  theme_minimal() +
+  scale_fill_manual(
+    name = "Cours payant", 
+    values = c("red", "blue"),
+    labels = c("non","oui")
+  ) +
+  ggtitle("Répartition des notes en fonction de la prise de cours particulier payant")+
+  theme(legend.position = "right")  
+
+```
+On retrouve la même observation que précédemment. Les personnes qui prennent des cours payants n'ont pas, statistiquement, de meilleurs résultats que ceux qui n'en prennent pas. L'analyse ici est la même que précédemment. Nous ne pouvons pas savoir si c'est le fait d'avoir eu de mauvaises notes auparavant qui fait que l'échantillon des personnes qui prennent des cours payants est plus mauvais que les autres, ou si c'est l'absence d'influence des cours payants sur leurs résultats scolaires qui mène à ce constat.
+
