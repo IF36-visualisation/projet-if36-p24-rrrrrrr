@@ -576,14 +576,19 @@ Les données qui m'interessent pour répondre à  cette question sont :
 
 
 ```{r diagrammeConsoAlcoolMat, fig.align='center', echo=FALSE}
-ggplot(data = tableMat, aes(x = factor(Dalc), y = MoyenneNote)) +
-   geom_violin(fill = "lightgreen")  +
-  stat_summary(fun = median, geom = "errorbar", aes(ymin = after_stat(y), ymax = after_stat(y), color = "Médiane"), width = 0.5, linetype = "dashed") + 
+ggplot(data = tableMat, aes(x = factor(Dalc), y = MoyenneNote,fill=factor(Dalc))) +
+  geom_violin() +
+  stat_summary(fun = median, geom = "errorbar", aes(ymin = after_stat(y), ymax = after_stat(y), color = "Médiane"), width = 0.5, linetype = "dashed") + scale_fill_manual(
+    name = "Consommation d'alcool", 
+    values = c("lightblue", "lightgreen", "pink", "orange", "grey"),
+    labels = c("très faible","faible","moyenne","forte","très forte")
+  ) +
   scale_color_manual(values = "red", name = "Légende", labels = "Médiane") +
   labs(x = "Consommation d'alcool en semaine", y = "Moyenne des notes en math sur les trois semestres") +
   theme_minimal() +
   ggtitle("Répartition des notes en math par niveau de consommation d'alcool")+
   theme(legend.position = "right")  
+
 
 ```
 
@@ -620,13 +625,19 @@ Comparons avec les notes en portugais oà¹ il y a deux fois plus d'individu par
 | 5                                | 17                  |
 
 ```{r diagrammeConsoAlcoolPort, fig.align='center', echo=FALSE}
-ggplot(data = tablePor, aes(x = factor(Dalc), y = MoyenneNote)) +
-   geom_violin(fill = "lightgreen")  +
+ggplot(data = tablePor, aes(x = factor(Dalc), y = MoyenneNote,fill=factor(Dalc))) +
+  geom_violin() +
   stat_summary(fun = median, geom = "errorbar", aes(ymin = after_stat(y), ymax = after_stat(y), color = "Médiane"), width = 0.5, linetype = "dashed") + 
-  scale_color_manual(values = "red", name = "Légende", labels = "Médiane") +
+  scale_fill_manual(
+    name = "Consommation d'alcool", 
+    values = c("lightblue", "lightgreen", "pink", "orange", "grey"),
+    labels = c("très faible","faible","moyenne","forte","très forte")
+  ) +
+  scale_color_manual(values = "red", name = "Légende", labels = "Médiane")+
   labs(x = "Consommation d'alcool en semaine", y = "Moyenne des notes en math sur les trois semestres",title = "Répartition de la moyenne des notes en portugais par niveau de consommation d'alcool") +
   theme_minimal() +
   theme(plot.title = element_text(size=11,face="bold"))  
+
 
 ```
 
@@ -642,13 +653,19 @@ On va donc visualiser les catégories de consommation d'alcool 1 et 2 ensembles 
 ```{r diagrammePortugaisRassemblement, fig.align='center', echo=FALSE}
 tablePor$GroupedDalc <- factor(ifelse(tablePor$Dalc %in% c(1, 2), "1-2", ifelse(tablePor$Dalc %in% c(4, 5), "4-5", tablePor$Dalc)))
 
-ggplot(data = tablePor, aes(x = GroupedDalc, y = MoyenneNote)) +
-  geom_violin(fill = "lightgreen") +
+ggplot(data = tablePor, aes(x = GroupedDalc, y = MoyenneNote,fill=GroupedDalc)) +
+  geom_violin() +
   stat_summary(fun = median, geom = "errorbar", aes(ymin = after_stat(y), ymax = after_stat(y), color = "Médiane"), width = 0.5, linetype = "dashed") +
+  scale_fill_manual(
+    name = "Consommation d'alcool", 
+    values = c("lightblue", "lightgreen", "pink"),
+    labels = c("faible et très faible","moyenne","forte et très forte")
+  ) +
   scale_color_manual(values = "red", name = "Légende", labels = "Médiane") +
   labs(x = "Consommation d'alcool en semaine", y = "Moyenne des notes en portugais sur les trois semestres",title ="Répartition de la moyenne des notes en portugais par niveau de consommation d'alcool regroupé") +
   theme_minimal() +
   theme(plot.title = element_text(size=10,face="bold")) 
+
 
 ```
 
@@ -674,15 +691,13 @@ On peut également se poser la question du redoublement des personnes qui consom
 proportions_redoublement <- tablePor %>%
   group_by(Dalc) %>%
   summarise(Total = n(),
-            Redoublements = sum(failures >= 1),  # Assurez-vous que 'failures' est correctement défini pour redoublement
+            Redoublements = sum(failures >= 1), 
             PourcentageRedoublement = (Redoublements / Total) * 100) %>%
   ungroup()
 
-
-# Créer le graphique
-ggplot(data = proportions_redoublement, aes(x = factor(Dalc), y = PourcentageRedoublement)) +
+ggplot(data = proportions_redoublement, aes(x = factor(Dalc), y = PourcentageRedoublement,fill = factor(Dalc))) +
   geom_bar(stat = "identity", position = position_dodge(), width = 0.7) +
-  scale_fill_brewer(palette = "Set1", name = "Consommation d'alcool en semaine") +
+  scale_fill_brewer(palette = "Set1", name = "Consommation d'alcool en semaine",labels = c("très faible", "faible", "moyen", "élevé", "très élevé")) +
   labs(title = "Pourcentage de redoublement par niveau de consommation d'alcool en semaine",x="Consommation d'alcool en semaine",y="Pourcentage de redoublement") +
   theme_minimal()
 
