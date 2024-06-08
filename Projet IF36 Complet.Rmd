@@ -961,7 +961,7 @@ ggplot(data = all_students, aes(x = factor(paid), y = MoyenneNote,fill=factor(pa
 ```
 On retrouve la même observation que précédemment. Les personnes qui prennent des cours payants n'ont pas, statistiquement, de meilleurs résultats que ceux qui n'en prennent pas. L'analyse ici est la même que précédemment. Nous ne pouvons pas savoir si c'est le fait d'avoir eu de mauvaises notes auparavant qui fait que l'échantillon des personnes qui prennent des cours payants est plus mauvais que les autres, ou si c'est l'absence d'influence des cours payants sur leurs résultats scolaires qui mène à ce constat.
 
-## Question 5: Existe-t-il une corrélation entre le temps de trajet entre le domicile et l'université et l'absentéisme chez les étudiants ?
+## Question 8: Existe-t-il une corrélation entre le temps de trajet entre le domicile et l'université et l'absentéisme chez les étudiants ?
 
 Etant étudiants, nous nous devons de participer aux cours qui nous sont dispensés : c'est une devoir ainsi qu'un besoin qu'il faut respecter. En revanche, nous savons que parmi les étudiants, certains sont plus réguliers que d'autres. On peut retrouver certains systématiquement à l'université et d'autres certainement pas.
 Mais pourquoi certains sont-ils plus absents que d'autres ? Est-ce par choix ou par handicap ?
@@ -974,8 +974,8 @@ Dans notre dataset, nous avons les informations pour chaque étudiant de :
 
 Dans un premier temps, il est nécessaire de récupérer les informations dont on a besoin. Ici, on extrait directement le nombre d'absences moyen par catégorie de temps de trajet sur les élèves de Portugais et de Maths.
 
-```{r Question 5 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
-#Question 5 :
+```{r Question 8 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
+#Question 8 :
 #La temps de trajet jusque son lieu d'étude est-il un facteur d'absence ?
 
 #Etablir les deux datasets avec le nombre d'absences et le temps de trajet
@@ -1008,7 +1008,7 @@ Nous allons donc essayer de comprendre ces résultats, peut être que certains �
 
 (Ce que l'on remarque directement, en dehors de notre question, c'est que les élèves sont bien moins absents en portugais qu'en mathématiques et ce, quelque soit leur temps de trajet. Cela peut s'expliquer facilement par le fait que les mathématiques sont globalement plus difficiles les langues et que donc d'y échapper par l'absentéisme peut etre une porte de sortie pour certains.)
 
-```{r Question 5 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
+```{r Question 8 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
 
 #Etablir les deux datasets avec le nombre d'absences et le temps de trajet
 distance_abs_dataset_mat2 <- tableMat[, c("absences", "traveltime")]
@@ -1037,7 +1037,7 @@ Ce qu'on observe c'est que les formes des violon plot se ressemblent plutôt ent
 Ce qui diffère, c'est sur les temps de trajet 1 et 2, il y a la présence d'un petit groupe de personne avec un nombre d'absences très élevé. Ce groupe est un facteur d'augmentation de la moyenne d'absences important et étire la forme du violin vers le haut.
 
 Essayons de visualiser ce groupe à l'aide d'un box plot afin de se rendre mieux compte.
-```{r Question 5 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
+```{r Question 8 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
 
 #Boxplot
 
@@ -1092,8 +1092,8 @@ Une meilleure analyse aurait donc été de d'un côté, combiner directement les
 On peut donc obtenir ceci.
 
 ****
-```{r Question 5 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
-#Question 5 :
+```{r Question 8 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
+#Question 8 :
 #La temps de trajet jusque son lieu d'étude est-il un facteur d'absence ?
 
 distance_abs_dataset_mat3 <- tableMat
@@ -1147,7 +1147,7 @@ En effet la question fait sens car deux possibilités peuvent être vraies.
 Vérifions cela.
 
 Pour ceci, nous prenons la même méthodologie que précedemment mais nous changeons la variable travel_time avec studytime.
-```{r Question 5 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
+```{r Question 8 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
 
 #En fonction du studytime ?
 
@@ -1176,7 +1176,7 @@ Et l'on observe tout de suite quelque chose de net : en effet, en maths et en po
 Regardons tout de même combien d'étudiants sont considérés dans chacune des catégories. Peut-être que comme précedemment, les échantillons ne sont pas suffisants dans certaines catégories.
 
 
-```{r Question 5 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
+```{r Question 8 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
 
 #Etablir les deux datasets avec le nombre d'absences et le temps de trajet
 studytime_abs_dataset_mat2 <- tableMat[, c("absences", "studytime")]
@@ -1204,7 +1204,7 @@ Egalement, les étudiants au nombre d'absences extrêmes étant toujours présen
 
 Nous réutilisions la même méthodologie que précedemment.
 
-```{r Question 5 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
+```{r Question 8 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
 
 #En fonction du studytime ?
 
