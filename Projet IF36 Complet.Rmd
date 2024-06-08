@@ -5,6 +5,9 @@ date: '2024-05-05'
 output:
   html_document: default
   pdf_document: default
+editor_options: 
+  markdown: 
+    wrap: sentence
 ---
 
 ```{r setup, include=FALSE}
@@ -27,15 +30,18 @@ tableMat <- read_csv("./data/student-mat.csv")
 tableMat$MoyenneNote <- rowMeans(tableMat[,c("G1","G2","G3")])
 ```
 
-
 ```{r ImportationPortugais, include=FALSE}
 tablePor <- read_csv("./data/student-por.csv")
 tablePor$MoyenneNote <- rowMeans(tablePor[,c("G1","G2","G3")])
 ```
 
-Dans un premier temps, nous devons nous poser la question de comment allons-nous étudier nos données. En effet, on à  notre dispotition deux datasets : un sur les élèves suivant le cours de mathématiques (395) et l'autre de portugais (649). Or il est important de noter que la plupart des étudiants de mathématiques suivent également le cours de portugais (382 / 395).
+Dans un premier temps, nous devons nous poser la question de comment allons-nous étudier nos données.
+En effet, on à notre dispotition deux datasets : un sur les élèves suivant le cours de mathématiques (395) et l'autre de portugais (649).
+Or il est important de noter que la plupart des étudiants de mathématiques suivent également le cours de portugais (382 / 395).
 
-De la sorte, si l'on essaie de joindre les deux datasets, nous auront des doublons, et même si on sait les identifier, il n'est pas pertinent des les fusionner pour les rendre unique. En effet, cela signifierait que l'on doive également fusionner des résultats scolaires de mathématiques et de portugais en une moyenne des deux, alors que les moyennes et répartitions des notes diffèrent entre dans ces deux domaines. Cela ne serait pas être pertinant.
+De la sorte, si l'on essaie de joindre les deux datasets, nous auront des doublons, et même si on sait les identifier, il n'est pas pertinent des les fusionner pour les rendre unique.
+En effet, cela signifierait que l'on doive également fusionner des résultats scolaires de mathématiques et de portugais en une moyenne des deux, alors que les moyennes et répartitions des notes diffèrent entre dans ces deux domaines.
+Cela ne serait pas être pertinant.
 
 Ainsi, en prenant en compte cette problématique, il nous est offert 3 chemins pour étudier notre dataset :
 
@@ -43,9 +49,10 @@ Ainsi, en prenant en compte cette problématique, il nous est offert 3 chemins p
 
 2.  N'étudier que les élèves de portugais : des résultats scolaires qui peuvent différer de ceux d'une science exacte et évitant les doublons
 
-3.  Etudier la jointure des étudiants de mathématiques et de portugais : des résultats scolaires mixtes et moins pertinents et considérant les doublons comme deux étudiants à  part entière
+3.  Etudier la jointure des étudiants de mathématiques et de portugais : des résultats scolaires mixtes et moins pertinents et considérant les doublons comme deux étudiants à part entière
 
-Il peut être intéressant de répondre aux questions que l'on se pose sous différents angles et de comparer les résultats en fonction de ceux-ci. Nous allons donc considérer ces trois possibilités et les exploiter dans les réponses à  nos interrogations.
+Il peut être intéressant de répondre aux questions que l'on se pose sous différents angles et de comparer les résultats en fonction de ceux-ci.
+Nous allons donc considérer ces trois possibilités et les exploiter dans les réponses à nos interrogations.
 
 Pour ceci, on a donc besoin du troisième dataset qui joint les deux autres, on le nommera all_students.
 
@@ -55,26 +62,24 @@ all_students <- full_join(tableMat,
                    by= c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","Mjob","Fjob","reason","guardian","traveltime","studytime","failures","schoolsup","famsup","paid","activities","nursery","higher","internet","romantic","famrel","freetime","goout","Dalc","Walc","health","absences","G1","G2","G3"))
 ```
 
-
-
 ## Question 1: Le fait de sortir souvent avec des amis entraîne-t-il nécessairement une plus grande consommation d'alcool ?
 
-
 Pour continuer notre étude exploratoire des habitudes de vie des étudiants nous souhaitions analyser une possible influence des sorties entre amis sur la consommation d'alcool.
-Les jeunes adaptent-ils leur consommation d'alcool en fonction de leurs sorties? Quelle forme prend cette consommation d'alcool sur une semaine?
-Nous aurions tendance à penser que les personnes voyant souvent leurs amis en dehors des cours seraient plus fréquemment exposés à l'alcool lors de soirées par exemple. De ce fait, nous pourrions nous attendre à constater une forte consommation d'alcool chez les individus sortant beaucoup.
+Les jeunes adaptent-ils leur consommation d'alcool en fonction de leurs sorties?
+Quelle forme prend cette consommation d'alcool sur une semaine?
+Nous aurions tendance à penser que les personnes voyant souvent leurs amis en dehors des cours seraient plus fréquemment exposés à l'alcool lors de soirées par exemple.
+De ce fait, nous pourrions nous attendre à constater une forte consommation d'alcool chez les individus sortant beaucoup.
 Une consommation d'alcool plus importante le week-end qu'en semaine chez les étudiants serait également en accord avec la pensée commune.
 
 Nous allons donc réaliser une analyse exploratoire de notre dataset pour comparer nos pensées avec la réalité des individus étudiés.
 
-Les donnéees qui m'interessent pour répondre à  cette question sont :
+Les donnéees qui m'interessent pour répondre à cette question sont :
 
-- **goout** : fréquence de sorties entre amis (numérique : de 1  très faible à  5  très élevé)
-- **Dalc** : consommation d'alcool en semaine (numérique : de 1  très faible à  5  très élevé)
-- **Walc** : consommation d'alcool le week-end (numérique : de 1  très faible à  5  très élevé)
-- **age** : age des individus (numérique)
-- **sex** : sexe des individus (nominal : F ou M)
-
+-   **goout** : fréquence de sorties entre amis (numérique : de 1 très faible à 5 très élevé)
+-   **Dalc** : consommation d'alcool en semaine (numérique : de 1 très faible à 5 très élevé)
+-   **Walc** : consommation d'alcool le week-end (numérique : de 1 très faible à 5 très élevé)
+-   **age** : age des individus (numérique)
+-   **sex** : sexe des individus (nominal : F ou M)
 
 ```{r FiltrageMat, include=FALSE}
 #Je n'ai maintenant que besoin de goout, Dalc, Walc, age et sex donc je garde les colonnes qui m'interesse pour économiser les traitements
@@ -85,7 +90,6 @@ head(tableMat1)
 #Personnes sortant fréquemment
 tableMat_filtered <- tableMat1 %>% filter(goout > 4)
 ```
-
 
 ```{r diagrammeRépartitionDalcWalc, fig.align='center', echo=FALSE}
 
@@ -167,10 +171,12 @@ Ces individus ont également évalué leur consommation d'alcool en semaine et l
 Après avoir réalisé ces visualisations plusieurs choses sont constatables:
 
 En semaine, la majorité (71.7%) des étudiants sortant souvent entre amis ne boit que très peu d'alcool tandisqu'un quart d'entre eux consomme fréquemment ou très fréquemment de l'alcool.
-Le week-end, la tendance s'inverse. En effet, 54.7% consomment fréquemment ou très fréquemment de l'alcool et seulement 28.3% que rarement ou très rarement.
+Le week-end, la tendance s'inverse.
+En effet, 54.7% consomment fréquemment ou très fréquemment de l'alcool et seulement 28.3% que rarement ou très rarement.
 Nous constatons qu'un quart des étudiants sortant souvent consomment occasionellement de l'alcool que ce soit en semaine ou le week-end.
 
-Nous savons que les étudiant organisent souvent des sorties entre eux le week-end et moins en semaine en raison de leurs cours. De ce fait, le week-end devient le moment de la semaine où ils peuvent s'amuser sans avoir peur des conséquences et donc consommer plus d'alcool.
+Nous savons que les étudiant organisent souvent des sorties entre eux le week-end et moins en semaine en raison de leurs cours.
+De ce fait, le week-end devient le moment de la semaine où ils peuvent s'amuser sans avoir peur des conséquences et donc consommer plus d'alcool.
 
 D'autre part, nous constatons clairement que les étudiants sortant rarement entre amis consomment beaucoup moins d'alcool que ceux sortant souvent et ce, en semaine mais aussi le week-end.
 
@@ -211,20 +217,22 @@ ggplot(summary_data, aes(x = factor(Dalc), y = count, fill = sex)) +
 
 Analysons les visualisations obtenues.
 
-En semaine, les étudiants sortant très fréquemment et consommant très rarement de l'alcool sont en majorité des femmes. La quasi totalité des femmes sortant fréquemment entre amis boivent très rarement. Les hommes ont quant à eux une consommation d'alcool plus répartie et uniforme. En effet, il y autant d'hommes qui en boivent très rarement que très fréquemment.
+En semaine, les étudiants sortant très fréquemment et consommant très rarement de l'alcool sont en majorité des femmes.
+La quasi totalité des femmes sortant fréquemment entre amis boivent très rarement.
+Les hommes ont quant à eux une consommation d'alcool plus répartie et uniforme.
+En effet, il y autant d'hommes qui en boivent très rarement que très fréquemment.
 
-Le weekend, les hommes et les femmes consomment de l'alcool de manière beaucoup plus fréquente comme montré précédemment. 
+Le weekend, les hommes et les femmes consomment de l'alcool de manière beaucoup plus fréquente comme montré précédemment.
 
 Les femmes qui sortent beaucoup entre amis ont donc tendances à boire très peu en semaine mais beaucoup plus fréquemment le week-end.
 Les hommes quant à eux ont en semaine une consomamtion d'alcool variant entre les individus mais s'accordent globalement le week-end pour boire très fréquemment.
 
-Finalement, il existe une différence notable de comportement face à l'alcool entre les hommes et les femmes en semaine. Cependant, le week-end, les deux sexes ont tendance à consommer de manière identique.
+Finalement, il existe une différence notable de comportement face à l'alcool entre les hommes et les femmes en semaine.
+Cependant, le week-end, les deux sexes ont tendance à consommer de manière identique.
 
 Il est également possible de réaliser cette même étude en se penchant sur l'âge des indivuds plutôt que sur leur sexe.
 
 ### Analyse de la consommation d'alcool chez les étudiants sortant fréquemment en fonction de leur âge
-
-
 
 ```{r diagrammeAge, fig.align='center', echo=FALSE}
 
@@ -259,25 +267,30 @@ ggplot(summary_data, aes(x = factor(Dalc), y = count, fill = factor(age))) +
 
 Grâce aux visualisations réalisées nous pouvons observer plusieurs phénomènes.
 
-En semaine, la quasi totalité des étudiants majeurs sortant souvent entre amis boivent assez peu fréquemment de l'alcool. Cependant, ils ont tendance à tous boire plus souvent le week-end. Cette différence est uniquement dû aux étudiants ayant 18 ans car ceux ayant 19 ou 22 ans ne change pas leur fréquence de consommation en fonction du moment de la semaine.
+En semaine, la quasi totalité des étudiants majeurs sortant souvent entre amis boivent assez peu fréquemment de l'alcool.
+Cependant, ils ont tendance à tous boire plus souvent le week-end.
+Cette différence est uniquement dû aux étudiants ayant 18 ans car ceux ayant 19 ou 22 ans ne change pas leur fréquence de consommation en fonction du moment de la semaine.
 
-Les étudiants mineurs sont intéressants à étudier. En effet, malgré qu'ils soient mineurs et n'ont donc pas le dorit légal de boire de l'alcool, une partie non négligeable d'entre eux admet en consommer de manière plus ou moins fréquente. En semaine, la grande majorité des étudiants admettant consommer fréquemment de l'alcool est constituée de mineurs. Le week-end ils sotn encore plus à en boire fréquemment.
+Les étudiants mineurs sont intéressants à étudier.
+En effet, malgré qu'ils soient mineurs et n'ont donc pas le dorit légal de boire de l'alcool, une partie non négligeable d'entre eux admet en consommer de manière plus ou moins fréquente.
+En semaine, la grande majorité des étudiants admettant consommer fréquemment de l'alcool est constituée de mineurs.
+Le week-end ils sotn encore plus à en boire fréquemment.
 
 Cependant, le weekend, les personnes ne buvant pas d'alcool sont uniquement des mineurs.
 
-On constate donc une différence de comportement face à l'alcool en fonction de l'âge des individus sortant fréquemment entre amis. Cela pourrait être causé par le fait que les mineurs sont possiblement plus influençables et ont tendance à immiter les plus grands, entrainant ainsi une consommation d'alcool toujours plus précoce. 
-
-
-
-
+On constate donc une différence de comportement face à l'alcool en fonction de l'âge des individus sortant fréquemment entre amis.
+Cela pourrait être causé par le fait que les mineurs sont possiblement plus influençables et ont tendance à immiter les plus grands, entrainant ainsi une consommation d'alcool toujours plus précoce.
 
 ## Question2 - les sportifs ont-ils de meilleurs résultats scolaires que les autres ?
 
-Il nous est souvent raconté que faire du sport permet un meilleur apprentissage, une meilleure concentration et un meilleur développement. Suivant cette logique, il nous est expliqué que par extension, le sport permet d'obtenir de meilleurs résultats scolaires. Mais est-ce la vérité ?
+Il nous est souvent raconté que faire du sport permet un meilleur apprentissage, une meilleure concentration et un meilleur développement.
+Suivant cette logique, il nous est expliqué que par extension, le sport permet d'obtenir de meilleurs résultats scolaires.
+Mais est-ce la vérité ?
 
 Nous allons donc essayer de résoudre cette énigme en nous posant la question suivante : les sportifs ont-ils de meilleurs résultats scolaires que les autres ?
 
-Pour répondre à  cette question il faut donc tout d'abord identifier ce qu'est un sportif. Il nous a semblé concret d'identifier un sportif comme ayant un niveau de santé supérieur ou égal à  3/5 et participant à  des activités extra-scolaires.
+Pour répondre à cette question il faut donc tout d'abord identifier ce qu'est un sportif.
+Il nous a semblé concret d'identifier un sportif comme ayant un niveau de santé supérieur ou égal à 3/5 et participant à des activités extra-scolaires.
 
 ```{r Question 2 : Identifier les sportifs, fig.align='center', echo=FALSE}
 #Question 1 :
@@ -292,7 +305,9 @@ tablePor2$sportif <- ifelse(tablePor2$health >= 3 & tablePor2$activities == "yes
 tableMat2$sportif <- ifelse(tableMat2$health >= 3 & tableMat2$activities == "yes", TRUE, FALSE)
 ```
 
-Egalement, afin de comparer les résultats scolaires des étudiants, il nous faut une variable unique indiquant ces résultats. On a donc simplement créé la variable "mean_results", étant la moyenne des résultats scolaires des étudiants sur les 3 examens du semestre. Ne connaissant pas le poids de chacun des examens, nous avons posé une pondération linéaire : chacun des examens compte pour autant.
+Egalement, afin de comparer les résultats scolaires des étudiants, il nous faut une variable unique indiquant ces résultats.
+On a donc simplement créé la variable "mean_results", étant la moyenne des résultats scolaires des étudiants sur les 3 examens du semestre.
+Ne connaissant pas le poids de chacun des examens, nous avons posé une pondération linéaire : chacun des examens compte pour autant.
 
 ```{r Question 2 : Voir les résultats moyens de chaque étudiants, fig.align='center', echo=FALSE}
 #Question 1 :
@@ -304,13 +319,14 @@ mean_results_mat <- rowMeans(tableMat2[, c("G1", "G2", "G3")])
 mean_results_por <- rowMeans(tablePor2[, c("G1", "G2", "G3")])
 ```
 
-Nous devrions maintenant avoir les clés en main pour essayer de répondre à  notre interrogation.
+Nous devrions maintenant avoir les clés en main pour essayer de répondre à notre interrogation.
 
 Dans un premier temps, nous allons essayer d'étudier la question en regardant le dataset qui joint les étudiants de portuguais et de mathématiques : all_students.
 
 On doit donc essayer de mettre en évidence les résultats scolaires en fonction de deux facteurs : la santé et la sportivité.
 
-Tout d'abord, il nous a semblé être le plus représentatif de poser les résultats scolaires en ordonnée et la santé en abscisse. On aura donc 5 colonnes indiquant les résultats scolaires en fonction de la santé, qui seront facilement comparables.
+Tout d'abord, il nous a semblé être le plus représentatif de poser les résultats scolaires en ordonnée et la santé en abscisse.
+On aura donc 5 colonnes indiquant les résultats scolaires en fonction de la santé, qui seront facilement comparables.
 
 Ensuite, pour ce qui est de la sportivité, représentons simplement d'une autre couleur les étudiants considérés comme"sportifs".
 
@@ -328,9 +344,12 @@ ggplot(data = all_students2, aes(x = health, y = mean_results_global)) +
   ggtitle("Résultats scolaires moyens en fonction de la santé et de la sportivité (GLOBAL)")
 ```
 
-On remarque ainsi que si l'on regarde tous les étudiants, la santé seule ne semble pas jouer sur les résultats scolaires : les résultats moyens sont les mêmes quelque soit le niveau de santé des étudiants (si on combine sportifs + non-sportifs). La seule différence que l'on observe est celle entre les étudiants en bonne santé sportifs et les étudiants en bonne santé non-sportifs. Néanmoins même si cette différence est bien présente, elle n'est pas non plus très significative.
+On remarque ainsi que si l'on regarde tous les étudiants, la santé seule ne semble pas jouer sur les résultats scolaires : les résultats moyens sont les mêmes quelque soit le niveau de santé des étudiants (si on combine sportifs + non-sportifs).
+La seule différence que l'on observe est celle entre les étudiants en bonne santé sportifs et les étudiants en bonne santé non-sportifs.
+Néanmoins même si cette différence est bien présente, elle n'est pas non plus très significative.
 
-On n'observe donc pas de résultats flagrants. On peut remettre aussi en question nos résultats puisque nous comparons les résultats scolaires globaux en regardant du même oeil des résultats de mathématiques que ceux de portugais.
+On n'observe donc pas de résultats flagrants.
+On peut remettre aussi en question nos résultats puisque nous comparons les résultats scolaires globaux en regardant du même oeil des résultats de mathématiques que ceux de portugais.
 
 Il semble donc nécessaire de regarder ce que l'on pourrait obtenir en ne regardant que individuellement les classes de mathématiques et de portugais et en gardant le même modèle de visualisation.
 
@@ -360,13 +379,19 @@ ggplot(data = tableMat2, aes(x = health, y = mean_results_mat)) +
 
 En analysant les résultats issus des classes de portugais de mathématiques nous retombons sur des conclusions plutà´t similaires : il semblerait que plus les étudiants sont en bonne santé, plus le fait dêtre sportif semble améliorer les résultats scolaires.
 
-En revanche, cette amélioration peut-être remise en cause. Elle n'est que minime, et les résultats moyens des sportifs restent similaires à  ceux obtenus par les étudiants en mauvaise santé. Cela montre-t-il que le sport n'apporte rien ?
+En revanche, cette amélioration peut-être remise en cause.
+Elle n'est que minime, et les résultats moyens des sportifs restent similaires à ceux obtenus par les étudiants en mauvaise santé.
+Cela montre-t-il que le sport n'apporte rien ?
 
-Mais plus précisément, le problème ne vient-il pas simplement de notre définition de ce qu'est un sportif ? Notre approche de cette définition est finalement simpliste : sportif = santé + activités, mais un étudiant en bonne santé pratiquant des activités extra-scolaires peut très bien ne pas être sportif du tout. Il peut être passioné par l'art et de ce fait pratiquer des activités au delà  de ses études.
+Mais plus précisément, le problème ne vient-il pas simplement de notre définition de ce qu'est un sportif ?
+Notre approche de cette définition est finalement simpliste : sportif = santé + activités, mais un étudiant en bonne santé pratiquant des activités extra-scolaires peut très bien ne pas être sportif du tout.
+Il peut être passioné par l'art et de ce fait pratiquer des activités au delà de ses études.
 
-Il faut donc essayer de trouver nouvel un angle d'approche à  notre étude. Simplifions la problématique, évitons des erreurs d'interprétations et regardons directement si les étudiants pratiquent des activités extra-scolaires, et si l'on peut lier ceci au reste des données.
+Il faut donc essayer de trouver nouvel un angle d'approche à notre étude.
+Simplifions la problématique, évitons des erreurs d'interprétations et regardons directement si les étudiants pratiquent des activités extra-scolaires, et si l'on peut lier ceci au reste des données.
 
-Nous allons à  nouveau étudier la classe de portugais avec le même modèle puisque c'est celle qui nous donné les meilleurs résultats précedemment. Changeons simplement la variable "sportif" en la variable "goes_out" signifiant si oui ou non un étudiant pratique des activités extra-scolaires.
+Nous allons à nouveau étudier la classe de portugais avec le même modèle puisque c'est celle qui nous donné les meilleurs résultats précedemment.
+Changeons simplement la variable "sportif" en la variable "goes_out" signifiant si oui ou non un étudiant pratique des activités extra-scolaires.
 
 ```{r Question 2 : Visu 3 por - activities, fig.align='center', echo=FALSE}
 #Question 1 :
@@ -384,9 +409,13 @@ ggplot(data = tablePor2, aes(x = health, y = mean_results_por)) +
   ggtitle("Résultats scolaires moyens en fonction de la santé et des activités (Portugais)")
 ```
 
-Ainsi, avec cette approche, nous observons tout de suite des résultats différents. On remarque aisément que plus un étudiant a un bon niveau de santé, plus il lui sera bénéfique par rapport aux autres de faire des activités extra-scolaires.
+Ainsi, avec cette approche, nous observons tout de suite des résultats différents.
+On remarque aisément que plus un étudiant a un bon niveau de santé, plus il lui sera bénéfique par rapport aux autres de faire des activités extra-scolaires.
 
-En revanche, les bénéfices ne sont pas vraiment existants. Le niveau n'évolue pas positivement, il se maintient juste. La pratique des activités extra-scolaires semble seulement permettre de maintenir un niveau scolaire équivalent quelque soit la santé, là  oà¹ la non-pratique semble le faire régresser. On peut tout de même dire qu'il faut donc pratiquer des activités extra-scolaires pour en moyenne avoir de meilleurs résultats que les autres.
+En revanche, les bénéfices ne sont pas vraiment existants.
+Le niveau n'évolue pas positivement, il se maintient juste.
+La pratique des activités extra-scolaires semble seulement permettre de maintenir un niveau scolaire équivalent quelque soit la santé, là oà¹ la non-pratique semble le faire régresser.
+On peut tout de même dire qu'il faut donc pratiquer des activités extra-scolaires pour en moyenne avoir de meilleurs résultats que les autres.
 
 [Hypothèses]
 
@@ -397,36 +426,24 @@ Pourquoi n'a-t-on pas des résultats si peu convaincants ?
 
 Peut être que dans notre jeu de données, ceux pratiquant des activités extra-scolaires n'ont pas été tant meilleurs que les autres et qu'il nous faudrait plus de données pour avoir de meilleures résultats.
 
-En conclusion, avec notre jeu de données, il n'est pas vraiment possible de répondre à  la question "Faire du sport permet-il vraiment dâ€™avoir de meilleurs résultats scolaires ?". En revanche, essayer de répondre à  cette question a permis de mettre en évidence des différences scolaires en fonctions des niveaux de santé et de la pratique d'activités extra-scolaires. Cela a finalement permis de répondre à  une question tout autre qui pourrait être "Est-il bon pour les études de pratiquer des activités extra-scolaires quelque soit sa santé ?". Question à  laquelle la réponse est oui, mais il faut adapter ses activités à  son niveau de santé afin de maximiser ses résultats scolaires.
-
-
-
-
-
-
-
-
-
+En conclusion, avec notre jeu de données, il n'est pas vraiment possible de répondre à la question "Faire du sport permet-il vraiment dâ€™avoir de meilleurs résultats scolaires ?".
+En revanche, essayer de répondre à cette question a permis de mettre en évidence des différences scolaires en fonctions des niveaux de santé et de la pratique d'activités extra-scolaires.
+Cela a finalement permis de répondre à une question tout autre qui pourrait être "Est-il bon pour les études de pratiquer des activités extra-scolaires quelque soit sa santé ?".
+Question à laquelle la réponse est oui, mais il faut adapter ses activités à son niveau de santé afin de maximiser ses résultats scolaires.
 
 ## Question 3: Existe-t-il une corrélation entre les les étudiants considérés comme geek et leurs notes en mathématiques?
 
 ### Partie exploratoire
 
-Nous avons ce cliché en tête qui dit que les geeks sont des personnes qui ont de bonnes notes en mathématiques. Nous allons essayer de voir si cela est vrai en analysant un dataset d'étudiants.
+Nous avons ce cliché en tête qui dit que les geeks sont des personnes qui ont de bonnes notes en mathématiques.
+Nous allons essayer de voir si cela est vrai en analysant un dataset d'étudiants.
 
-Tout d'abord nous allons définir ce qu'est un geek. Pour cela nous allons considérer un étudiant comme geek si :
-<br>- **activities** : activités extra-scolaires sont égale à  "no" 
-<br>- **internet** : accès à  Internet à  domicile est égale à  "yes"
-<br>- **goout** : sorties avec des amis est inférieur à  2 
-Ces critères de sélection sont parfaitement arbitraires et ne représentent en aucun cas la réalité.
+Tout d'abord nous allons définir ce qu'est un geek.
+Pour cela nous allons considérer un étudiant comme geek si : <br>- **activities** : activités extra-scolaires sont égale à "no" <br>- **internet** : accès à Internet à domicile est égale à "yes" <br>- **goout** : sorties avec des amis est inférieur à 2 Ces critères de sélection sont parfaitement arbitraires et ne représentent en aucun cas la réalité.
 
 Ensuite nous allons regarder les notes en mathématiques des élèves et nous verrons si corrélation il existe.
 
-Les notes de maths sont les variables : 
-<br>- **G1** : note du premier trimestre
-<br>- **G2** : note du deuxième trimestre
-<br>- **G3** : note du troisième trimestre
-
+Les notes de maths sont les variables : <br>- **G1** : note du premier trimestre <br>- **G2** : note du deuxième trimestre <br>- **G3** : note du troisième trimestre
 
 ```{r distributionBoxplot, fig.align='center', echo=FALSE}
 # Définir les critères pour considérer un étudiant comme geek
@@ -447,8 +464,10 @@ ggplot(data, aes(x = geek, y = moyenneNote)) +
        y = "moyenne en mathématiques") +
   theme_minimal()
 ```
-<br>Dans ce premier graphique on utilise un geom boxplot car il est utile pour se rendre compte de la distribution des moyennes et de la médiane dans chaque catégorie. On remarque que les geeks ont une moyenne légèrement plus élevée mais cela n'est pas significatif et peut-être dà» à  d'autre facteurs. Il y a aussi une valeur très en dessous des autres, cela peut être une valeur abérrante.
 
+<br>Dans ce premier graphique on utilise un geom boxplot car il est utile pour se rendre compte de la distribution des moyennes et de la médiane dans chaque catégorie.
+On remarque que les geeks ont une moyenne légèrement plus élevée mais cela n'est pas significatif et peut-être dà» à d'autre facteurs.
+Il y a aussi une valeur très en dessous des autres, cela peut être une valeur abérrante.
 
 ```{r distributionViolin, fig.align='center', echo=FALSE}
 # Créer un graphique pour comparer les notes 
@@ -461,7 +480,12 @@ ggplot(data, aes(x = geek, y = moyenneNote)) +
        y = "moyenne en mathématiques") +
   theme_minimal()
 ```
-<br>Ce deuxième graphique est identique au précédent à  la différence qu'il est sous forme violon. Cela permet une meilleure estimation de la densité de moyenne pour une moyenne donnée. On remarque que pour les geeks la densité est la plus élevée autour de la médiane contrairement aux autres. On peut aussi remarquer anomalie pour les moyennes autour de 5. Cela montre une séparation en deux groupes parmi les geeks.
+
+<br>Ce deuxième graphique est identique au précédent à la différence qu'il est sous forme violon.
+Cela permet une meilleure estimation de la densité de moyenne pour une moyenne donnée.
+On remarque que pour les geeks la densité est la plus élevée autour de la médiane contrairement aux autres.
+On peut aussi remarquer anomalie pour les moyennes autour de 5.
+Cela montre une séparation en deux groupes parmi les geeks.
 
 ```{r repartitionScatterplot, fig.align='center', echo=FALSE}
 # Créer un nuage de points pour visualiser les notes en mathématiques entre les geeks et les non-geeks
@@ -472,8 +496,12 @@ ggplot(data, aes(x = geek, y = moyenneNote, color = geek)) +
   scale_color_manual(values = c("Geek" = "blue", "Non-Geek" = "red")) +
   theme_minimal()
 ```
-<br>Sur ce troisième graphique, on a décidé d'afficher chaque moyenne de manière individuelle pour pouvoir mieux se rendre compte de la répartition des notes. On remarque instantanément qu'il y a une grande différence d'échantillon parmi les deux catégories traitées. C'est est une première limite liée à  cette analyse de données.
-Nous pouvons quand même dire que les données affichées sont cohérentes avec les deux premiers graphiques. On distingue bien deux groupes ainsi que la médiane.
+
+<br>Sur ce troisième graphique, on a décidé d'afficher chaque moyenne de manière individuelle pour pouvoir mieux se rendre compte de la répartition des notes.
+On remarque instantanément qu'il y a une grande différence d'échantillon parmi les deux catégories traitées.
+C'est est une première limite liée à cette analyse de données.
+Nous pouvons quand même dire que les données affichées sont cohérentes avec les deux premiers graphiques.
+On distingue bien deux groupes ainsi que la médiane.
 
 ```{r quantitePersonnes, fig.align='center', include=FALSE}
 count_data <- data %>%
@@ -487,7 +515,10 @@ ggplot(count_data, aes(x = geek, y = n)) +
        y = "Nombre de personnes") +
   theme_minimal()
 ```
-<br>Sur ce dernier graphique, on a décidé de compter le nombre de personnes dans chaque catégorie. On remarque que le nombre de non-geeks est beaucoup plus élevé que le nombre de geek (facteur 35). Cela est une limite à  notre analyse car les résultats ne sont pas exploitables sur un si petit échantillonnage.
+
+<br>Sur ce dernier graphique, on a décidé de compter le nombre de personnes dans chaque catégorie.
+On remarque que le nombre de non-geeks est beaucoup plus élevé que le nombre de geek (facteur 35).
+Cela est une limite à notre analyse car les résultats ne sont pas exploitables sur un si petit échantillonnage.
 
 ```{r repartitionHommeFemme, fig.align='center', echo=FALSE}
 # Créer un tableau croisé pour compter le nombre d'hommes et de femmes dans chaque catégorie
@@ -508,7 +539,10 @@ ggplot(gender_df, aes(x = Catégorie, y = Count, fill = Sexe)) +
   scale_fill_manual(values = c("yellow3", "mediumpurple")) +  # Couleurs pour les hommes (bleu) et les femmes (rose)
   theme_minimal()
 ```
-<br>Sur ce graphique, on a décidé de compter le nombre d'hommes et de femmes dans chaque catégorie. On remarque que le nombre d'homme et de femme sont équivalents dans chaque catégorie. Donc cet aspect de l'analyse n'a pas d'importance.
+
+<br>Sur ce graphique, on a décidé de compter le nombre d'hommes et de femmes dans chaque catégorie.
+On remarque que le nombre d'homme et de femme sont équivalents dans chaque catégorie.
+Donc cet aspect de l'analyse n'a pas d'importance.
 
 ```{r moyeneHommeFemme, fig.align='center', echo=FALSE}
 means <- data %>%
@@ -527,33 +561,33 @@ ggplot(means, aes(x = sex, y = mean_math_score, fill = sex)) +
   theme_minimal()
 
 ```
-<br>Sur ce graphique, on a décidé de comparer les moyennes des notes en mathématiques entre les hommes et les femmes. On remarque que les femmes et les hommes ont excatement la même moyenne. Cela montre que le sexe n'a pas d'impact sur les notes en mathématiques. 
 
+<br>Sur ce graphique, on a décidé de comparer les moyennes des notes en mathématiques entre les hommes et les femmes.
+On remarque que les femmes et les hommes ont excatement la même moyenne.
+Cela montre que le sexe n'a pas d'impact sur les notes en mathématiques.
 
-### Partie analyse 
+### Partie analyse
 
 Dans cette partie nous tenterons d'analyser les différents résultats obtenus dans la partie exploratoire.
 
 En effet, la précédente partie nous a permis de récolter beaucoup d'informations maintenant il s'agit de les comprendres.
 
-On remarque que les geeks ont une moyenne en mathématiques légèrement plus élevée que les non-geeks. En effet, la médiane de ces derniers est légèrement plus haute. Cela s'est vu sur les deux premiers graphiques.
+On remarque que les geeks ont une moyenne en mathématiques légèrement plus élevée que les non-geeks.
+En effet, la médiane de ces derniers est légèrement plus haute.
+Cela s'est vu sur les deux premiers graphiques.
 
-On a aussi pu remarquer que l'écart type des moyennes parmi les geeks était important à  tels points que nous pouvions les séparer en deux groupes distincts. Cela est visible sur le deuxième graphique.
+On a aussi pu remarquer que l'écart type des moyennes parmi les geeks était important à tels points que nous pouvions les séparer en deux groupes distincts.
+Cela est visible sur le deuxième graphique.
 
 Cela nous montre qu'il y a peu de chances qu'une corrélation entre ces deux critères existe.
 
-Mais il est important de noter que le nombre d'étudiants considérés comme geeks est très faible par rapport aux non-geeks. Cela fausse grandement l'analyse sachant que l'on parle de moyenne donc la population de chaque catégorie devrait être équivalente.
+Mais il est important de noter que le nombre d'étudiants considérés comme geeks est très faible par rapport aux non-geeks.
+Cela fausse grandement l'analyse sachant que l'on parle de moyenne donc la population de chaque catégorie devrait être équivalente.
 
-Donc, d'après ce dataset, la conclusion est que les geeks n'ont pas de meilleures notes en mathématiques que les non-geeks. Même si cette conclusion est erronée due au manque d'échantillonnage, elle est cohérente avec les données récoltées.
+Donc, d'après ce dataset, la conclusion est que les geeks n'ont pas de meilleures notes en mathématiques que les non-geeks.
+Même si cette conclusion est erronée due au manque d'échantillonnage, elle est cohérente avec les données récoltées.
 
-
-
-
-
-
-
-
-## Question 4:  Y-a-t-il un lien entre la consommation d'alcool et l'échec scolaire, l'absentéisme ?
+## Question 4: Y-a-t-il un lien entre la consommation d'alcool et l'échec scolaire, l'absentéisme ?
 
 ```{r RedefintionMat, include=FALSE, fig.align='center', echo=FALSE}
 
@@ -571,22 +605,24 @@ print(nbPersonneDalMat)
 
 ### Partie exploration
 
-L'arrivée dans le monde des études est souvent le moment de la découverte de l'alcool. Or sachant le caractère destructeur que peut avoir l'alcool sur la santé. Nous nous sommes posé la question de l'impact de l'alcool sur l'échec scolaire. Nous voulons savoir si l'alcool a un impact à  court terme sur ce groupe d'individu et pouvoir, peut être, le quantifier.
+L'arrivée dans le monde des études est souvent le moment de la découverte de l'alcool.
+Or sachant le caractère destructeur que peut avoir l'alcool sur la santé.
+Nous nous sommes posé la question de l'impact de l'alcool sur l'échec scolaire.
+Nous voulons savoir si l'alcool a un impact à court terme sur ce groupe d'individu et pouvoir, peut être, le quantifier.
 
-Nous voulons donc savoir si une forte consommation d'alcool a une influence négative sur les notes des individus. Nous pensons que l'alcool a une influence fortement négative sur les individus. Autrement formulés, nous pensons que les individus qui consomment le plus d'alcool sont ceux qui ont les moins bons résultats.
+Nous voulons donc savoir si une forte consommation d'alcool a une influence négative sur les notes des individus.
+Nous pensons que l'alcool a une influence fortement négative sur les individus.
+Autrement formulés, nous pensons que les individus qui consomment le plus d'alcool sont ceux qui ont les moins bons résultats.
 
-Les données qui m'interessent pour répondre à  cette question sont :
+Les données qui m'interessent pour répondre à cette question sont :
 
-- **Failures** : nombre d'échecs aux classes précédentes (numérique : n si 1  n  3, sinon 4)
-- **Dalc** : consommation d'alcool en semaine (numérique : de 1  très faible à  5  très élevé)
-- **Walc** : consommation d'alcool le week-end (numérique : de 1  très faible à  5  très élevé)
-- **MoyenneNote** : qui est la moyenne que nous avons calculée en faisant la moyenne des notes des 3 trimestres
-  - G1 : note du premier trimestre (numérique : de 0 à  20)
-  - G2 : note du deuxième trimestre (numérique : de 0 à  20)
-  - G3 : note finale (numérique : de 0 à  20, cible de sortie)
-  
-
-
+-   **Failures** : nombre d'échecs aux classes précédentes (numérique : n si 1 n 3, sinon 4)
+-   **Dalc** : consommation d'alcool en semaine (numérique : de 1 très faible à 5 très élevé)
+-   **Walc** : consommation d'alcool le week-end (numérique : de 1 très faible à 5 très élevé)
+-   **MoyenneNote** : qui est la moyenne que nous avons calculée en faisant la moyenne des notes des 3 trimestres
+    -   G1 : note du premier trimestre (numérique : de 0 à 20)
+    -   G2 : note du deuxième trimestre (numérique : de 0 à 20)
+    -   G3 : note finale (numérique : de 0 à 20, cible de sortie)
 
 ```{r diagrammeConsoAlcoolMat, fig.align='center', echo=FALSE}
 ggplot(data = tableMat, aes(x = factor(Dalc), y = MoyenneNote)) +
@@ -602,11 +638,16 @@ ggplot(data = tableMat, aes(x = factor(Dalc), y = MoyenneNote)) +
 
 ## Analyse statistique des données
 
-On remarque que la répartition statistique des moyennes en math n'est pas vraiment impactée par la consommation d'alcool. En effet, les groupes d'individus qui se notent 5/5 pour la consommation d'alcool ont même une médiane légèrement supérieure à  ceux qui se notent 1/5 (ceux qui consomment le moins).
+On remarque que la répartition statistique des moyennes en math n'est pas vraiment impactée par la consommation d'alcool.
+En effet, les groupes d'individus qui se notent 5/5 pour la consommation d'alcool ont même une médiane légèrement supérieure à ceux qui se notent 1/5 (ceux qui consomment le moins).
 
-Cependant, on peut noter que, plus la notation de la consommation d'alcool augmente, plus l'intervalle des notes à  tendances à  se resserer et à  se concentrer autour de la médiane.
+Cependant, on peut noter que, plus la notation de la consommation d'alcool augmente, plus l'intervalle des notes à tendances à se resserer et à se concentrer autour de la médiane.
 
-On peut l'expliquer très simplement statistiquement par le nombre de personnes par catégorie. En effet, on sait que souvent les répartitions des notes suivent des lois normales. Or, les échantillons sont très grands pour une consommation d'alcool faible, mais très faibles pour une grosse consommation d'alcool. Donc les valeurs extrêmes seront alors moins probables. Cela peut alors affecter le nombre de valeur extrême.
+On peut l'expliquer très simplement statistiquement par le nombre de personnes par catégorie.
+En effet, on sait que souvent les répartitions des notes suivent des lois normales.
+Or, les échantillons sont très grands pour une consommation d'alcool faible, mais très faibles pour une grosse consommation d'alcool.
+Donc les valeurs extrêmes seront alors moins probables.
+Cela peut alors affecter le nombre de valeur extrême.
 
 ### Répartition par catégorie de consommation d'alcool (Math)
 
@@ -645,12 +686,13 @@ ggplot(data = tablePor, aes(x = factor(Dalc), y = MoyenneNote)) +
 
 ## Analyse des données
 
-On remarque ici que la médiane des notes en Portugais chute légèrement quand la consommation d'alcool en semaine augmente. On retrouve ici, aussi le même phénomène de réduction de l'intervalle autour de la médianne quand la consommation d'alcool augmente.
+On remarque ici que la médiane des notes en Portugais chute légèrement quand la consommation d'alcool en semaine augmente.
+On retrouve ici, aussi le même phénomène de réduction de l'intervalle autour de la médianne quand la consommation d'alcool augmente.
 
-Nous nous attendions à  des résultats beaucoup plus significatifs. Il est fort probable aussi, au vu de l'auto-évaluation de la consommation d'alcool sur une échelle de 1 à  5, qu'un biais de la centralité est apparu chez certains étudiants, ce qui a peut-être faussé les données.
+Nous nous attendions à des résultats beaucoup plus significatifs.
+Il est fort probable aussi, au vu de l'auto-évaluation de la consommation d'alcool sur une échelle de 1 à 5, qu'un biais de la centralité est apparu chez certains étudiants, ce qui a peut-être faussé les données.
 
 On va donc visualiser les catégories de consommation d'alcool 1 et 2 ensembles et les catégories 4 et 5 ensembles pour observer un résultat qui tiendrait compte de ce biais.
-
 
 ```{r diagrammePortugaisRassemblement, fig.align='center', echo=FALSE}
 tablePor$GroupedDalc <- factor(ifelse(tablePor$Dalc %in% c(1, 2), "1-2", ifelse(tablePor$Dalc %in% c(4, 5), "4-5", tablePor$Dalc)))
@@ -667,7 +709,8 @@ ggplot(data = tablePor, aes(x = GroupedDalc, y = MoyenneNote)) +
 
 ## Analyse des données
 
-Avec ce graphique, on constate la même chute de la moyenne avec maintenant un échantillon plus important pour la catégorie 4-5. On remarque aussi, les gaussiennes grâce à  cette visualisation en violin, ce qui nous conforte à  croire que l'échantillon est un peu plus représentatif.
+Avec ce graphique, on constate la même chute de la moyenne avec maintenant un échantillon plus important pour la catégorie 4-5.
+On remarque aussi, les gaussiennes grâce à cette visualisation en violin, ce qui nous conforte à croire que l'échantillon est un peu plus représentatif.
 
 ### Répartition par catégorie de consommation d'alcool
 
@@ -677,11 +720,13 @@ Avec ce graphique, on constate la même chute de la moyenne avec maintenant un �
 | 3                                | 43                  |
 | 4/5                              | 34                  |
 
+On peut maintenant tisser une relation entre ceux qui consomme le plus et ceux qui ont une moyenne au cours de l'année plus faible.
+Cela peut venir de plusieurs facteurs.
+Les causes possibles sont soit le manque de données, soit le fait que l'alcool rende moins performant, soit que les moins performant ont tendance à se tourner vers l'alcool/la sociabilité/l'extrascolaire, soit un mixte des deux derniers facteurs.
 
-On peut maintenant tisser une relation entre ceux qui consomme le plus et ceux qui ont une moyenne au cours de l'année plus faible. Cela peut venir de plusieurs facteurs. Les causes possibles sont soit le manque de données, soit le fait que l'alcool rende moins performant, soit que les moins performant ont tendance à se tourner vers l'alcool/la sociabilité/l'extrascolaire, soit un mixte des deux derniers facteurs.
-
-On peut également se poser la question du redoublement des personnes qui consomment le plus d'alcool. En effet, les personnes, qui consomment le plus, sont peut-être ceux qui ont déjà  redoublé. Si c'est le cas, on pourrait s'interroger sur le rà´le du redoublement dans la moyenne de leurs notes actuelles.
-
+On peut également se poser la question du redoublement des personnes qui consomment le plus d'alcool.
+En effet, les personnes, qui consomment le plus, sont peut-être ceux qui ont déjà redoublé.
+Si c'est le cas, on pourrait s'interroger sur le rà´le du redoublement dans la moyenne de leurs notes actuelles.
 
 ```{r diagrammeRedoublementComparaison, fig.align='center', echo=FALSE}
 proportions_redoublement <- tablePor %>%
@@ -701,7 +746,9 @@ ggplot(data = proportions_redoublement, aes(x = factor(Dalc), y = PourcentageRed
 
 ```
 
-On remarque que notre hypothèse a été validé. Il y a bien plus de redoublement proportionnellement pour une plus grande consommation d'alcool. Ce qui peut compenser, le fait que la médiane des moyennes des notes sur les groupes 4 et 5 ne soit pas énormément inférieur à  la médiane des moyennes des notes des groupes 1 et 2.
+On remarque que notre hypothèse a été validé.
+Il y a bien plus de redoublement proportionnellement pour une plus grande consommation d'alcool.
+Ce qui peut compenser, le fait que la médiane des moyennes des notes sur les groupes 4 et 5 ne soit pas énormément inférieur à la médiane des moyennes des notes des groupes 1 et 2.
 
 ```{r correlationEtudeMere, fig.align='center', echo=FALSE}
  
@@ -732,6 +779,7 @@ ggplot(df, aes(x = Medu, y = moyenne_notes)) +
   theme_minimal()
 
 ```
+
 ```{r correlationEtudePere, fig.align='center', echo=FALSE}
 
 # Visualiser la relation entre le niveau d'éducation du père et les résultats scolaires des enfants
@@ -742,7 +790,8 @@ ggplot(df, aes(x = Fedu, y = moyenne_notes)) +
        y = "Moyenne des résultats scolaires") +
   theme_minimal()
 
-``` 
+```
+
 ```{r correlationEtudeParent, fig.align='center', echo=FALSE}
 
 
@@ -756,6 +805,18 @@ ggplot(education_results, aes(x = Medu, y = moyenne_notes, fill = Fedu)) +
        fill = "Niveau d'éducation du père") +
   theme_minimal()
 ```
+## Question 5: Existe-t-il une corrélation entre le temps de trajet entre le domicile et l'université et l'absentéisme chez les étudiants ?
+
+Etant étudiants, nous nous devons de participer aux cours qui nous sont dispensés : c'est une devoir ainsi qu'un besoin qu'il faut respecter. En revanche, nous savons que parmi les étudiants, certains sont plus réguliers que d'autres. On peut retrouver certains systématiquement à l'université et d'autres certainement pas.
+Mais pourquoi certains sont-ils plus absents que d'autres ? Est-ce par choix ou par handicap ?
+Ici nous allons essayer de répondre en partie à cette question, en essayant de voir s''il y a un lien entre le temps de trajet et l'absentéisme en cours.
+
+Dans notre dataset, nous avons les informations pour chaque étudiant de : 
+- temps de trajet domicile-école entre 1 et 4 (avec : 1 - <15 min., 2 - 15 à 30 min., 3 - 30 min. à 1 heure, ou 4 - >1 heure)
+- leur nombre d'absences scolaires sur les 93 cours de l'année
+
+
+Dans un premier temps, il est nécessaire de récupérer les informations dont on a besoin. Ici, on extrait directement le nombre d'absences moyen par catégorie de temps de trajet sur les élèves de Portugais et de Maths.
 
 ```{r Question 5 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
 #Question 5 :
@@ -781,6 +842,18 @@ ggplot(distance_abs_dataset_por, aes(x = traveltime, y = absences)) +
        x = "Temps de trajet", y = "Nombre moyen d'absences") +
   theme_minimal()
 
+```
+On remarque immédiatement quelque chose d'assez étonnant : gloabalement, plus les élèves ont un temps de trajet élevé, moins ils sont absents. Cela s'observe plus particulièrement sur le dataset des élèves de maths, là ou sur la classe de portugais, l'absence moyenne est plus linéaire, mais n'infirme pas non plus la tendance observée en maths.
+
+Ces résultats semblent illogique, plus le temps de trajet est long, plus l'absentéisme est un gain de temps pour un étudiant. De plus, avec plus de temps de trajet, les problèmes de transport sont plus courants et donc retards et absentéismes devraient l'être aussi.
+
+Nous allons donc essayer de comprendre ces résultats, peut être que certains étudiants faussent les résultats avec un nombre d'absence extraordinaire.
+
+
+(Ce que l'on remarque directement, en dehors de notre question, c'est que les élèves sont bien moins absents en portugais qu'en mathématiques et ce, quelque soit leur temps de trajet. Cela peut s'expliquer facilement par le fait que les mathématiques sont globalement plus difficiles les langues et que donc d'y échapper par l'absentéisme peut etre une porte de sortie pour certains.)
+
+```{r Question 5 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
+
 #Etablir les deux datasets avec le nombre d'absences et le temps de trajet
 distance_abs_dataset_mat2 <- student_mat[, c("absences", "traveltime")]
 distance_abs_dataset_por2 <- student_por[, c("absences", "traveltime")]
@@ -801,6 +874,15 @@ ggplot(distance_abs_dataset_por2, aes(x = factor(traveltime), y = absences)) +
   theme_minimal()
 
 
+```
+On a donc réalisé des violon plot afin d'observer la répartition du nombre d'absence des élèves.
+
+Ce qu'on observe c'est que les formes des violon plot se ressemblent plutôt entre les différentes catégories de temps de trajet et les différents cours.
+Ce qui diffère, c'est sur les temps de trajet 1 et 2, il y a la présence d'un petit groupe de personne avec un nombre d'absences très élevé. Ce groupe est un facteur d'augmentation de la moyenne d'absences important et étire la forme du violin vers le haut.
+
+Essayons de visualiser ce groupe à l'aide d'un box plot afin de se rendre mieux compte.
+```{r Question 5 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
+
 #Boxplot
 
 # Maths
@@ -817,6 +899,14 @@ ggplot(distance_abs_dataset_por2, aes(x = factor(traveltime), y = absences)) +
        x = "Temps de trajet", y = "Nombre d'absences") +
   theme_minimal()
 
+```
+A l'aide du box plot, on remarque plus facilement les individus sortant du groupe global d'absences moyennes.
+On remarque également le comportement du nombre d'absences moyennes hors extrémas. Ce que l'on identifie, c'est que en dehors des quelques élèves très peu assidus, le nombre d'absences moyen ne semble pas évoluer avec le temps de trajet. Les 4 box plot sont relativement similaires.
+
+Egalement, on observe que plus le temps de trajet est long, moins le nombre d'individus en dehors des normes semble être élevé. 
+Mais cela est sûrement dû au nombre d'individus dans chacun des échantillons.
+Il serait intéressant de savoir combien d'individus sont présents dans chacun des échantillons afin d'avoir une analyse plus correcte.
+```{r Question 5 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
 
 #Combien d'étudiants dans chaque catégorie ?
 
@@ -836,6 +926,72 @@ ggplot(distance_abs_dataset_por2, aes(x = factor(traveltime))) +
        x = "Temps de trajet", y = "Nombre d'élèves") +
   theme_minimal()
 
+
+
+```
+Tout se suite, on comprend pourquoi il y avait une plus grande présence d'individus hors normes dans les groupes : respectivement, les groupes 1 et 2 sont bien plus imposants que les 3 et 4.
+
+Une meilleure analyse aurait donc été de d'un côté, combiner directement les temps de trajets 3 et 4 afin d'avoir des valeurs se basant sur un plus grand nombre d'individus, et d'un autre côté de regarder le nombre d'absences médian afin de limiter l'effet des quelques étudiants très peu assidus.
+
+On peut donc obtenir ceci.
+
+****
+```{r Question 5 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
+#Question 5 :
+#La temps de trajet jusque son lieu d'étude est-il un facteur d'absence ?
+
+distance_abs_dataset_mat3 <- student_mat
+distance_abs_dataset_por3 <- student_por
+
+#Créer une nouvelle variable qui regroupe les catégories traveltime = 3 et traveltime = 4 en une seule catégorie traveltime >= 3
+# Créer une nouvelle variable traveltime_cat à partir de la variable traveltime
+distance_abs_dataset_mat3$traveltime_cat <- ifelse(distance_abs_dataset_mat3$traveltime == 3 | distance_abs_dataset_mat3$traveltime == 4, "3+", as.character(distance_abs_dataset_mat3$traveltime))
+distance_abs_dataset_por3$traveltime_cat <- ifelse(distance_abs_dataset_por3$traveltime == 3 | distance_abs_dataset_por3$traveltime == 4, "3+", as.character(distance_abs_dataset_por3$traveltime))
+
+# Convertir la nouvelle variable en facteur
+distance_abs_dataset_mat3$traveltime_cat <- as.factor(distance_abs_dataset_mat3$traveltime_cat)
+distance_abs_dataset_por3$traveltime_cat <- as.factor(distance_abs_dataset_por3$traveltime_cat)
+
+
+#Etablir les deux datasets avec le nombre d'absences et le temps de trajet
+distance_abs_dataset_mat3 <- aggregate(absences ~ traveltime_cat, data = distance_abs_dataset_mat3, FUN = median)
+distance_abs_dataset_por3 <- aggregate(absences ~ traveltime_cat, data = distance_abs_dataset_por3, FUN = median)
+
+#Nombre d'absences moyen : sur le total des 93 cours de l'année
+
+#Maths
+ggplot(distance_abs_dataset_mat3, aes(x = traveltime_cat, y = absences)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Nombre median d'absences en fonction du temps de trajet chez les élèves de Maths",
+       x = "Temps de trajet", y = "Nombre moyen d'absences") +
+  theme_minimal()
+
+#Portugais
+ggplot(distance_abs_dataset_por3, aes(x = traveltime_cat, y = absences)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Nombre median d'absences en fonction du temps de trajet chez les élèves de Portugais",
+       x = "Temps de trajet", y = "Nombre median d'absences") +
+  theme_minimal()
+
+```
+En appliquant ces modifications, on identifie clairement que le temps de trajet n'a pas d'influence sur le nombre d'absences.
+
+****
+
+Comme on a vu que le temps de trajet ne semble pas vraiment influer sur l'absentéisme, on reste un peu sur notre faim. On a pas trouvé de variable corrélée à l'absentéisme ...
+Il est intéressant de se demander : qu'est ce qui serait correlé à ces absences alors ? 
+Ainsi, une autre idée nous vient tout de suite en tête : le temps d'étude ! En effet, un étudiant travaillant beaucoup en dehors des cours, devrait logiquement aussi participer aux cours.
+
+On se pose donc la question suivante : les étudiants travaillants plus en dehors des cours, sont-ils plus ou moins absents ?
+
+En effet la question fait sens car deux possibilités peuvent être vraies.
+1 - Les étudiants travaillant beaucoup en dehors des cours, sont sérieux et assidus et donc participent plus aux cours.
+2 - Les étudiants qui travaillent beaucoup en dehors des cours, travaillent autant parce qu'ils n'étaient justement pas en cours. Ils se doivent donc de rattraper leur retard.
+
+Vérifions cela.
+
+Pour ceci, nous prenons la même méthodologie que précedemment mais nous changeons la variable travel_time avec studytime.
+```{r Question 5 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
 
 #En fonction du studytime ?
 
@@ -857,6 +1013,15 @@ ggplot(studytime_abs_dataset_por, aes(x = studytime, y = absences)) +
        x = "Temps d'étude hebdomadaire", y = "Nombre moyen d'absences") +
   theme_minimal()
 
+```
+Et l'on observe tout de suite quelque chose de net : en effet, en maths et en portugais, les étudiants travaillant plus semblent sensiblement moins absents.
+
+
+Regardons tout de même combien d'étudiants sont considérés dans chacune des catégories. Peut-être que comme précedemment, les échantillons ne sont pas suffisants dans certaines catégories.
+
+
+```{r Question 5 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
+
 #Etablir les deux datasets avec le nombre d'absences et le temps de trajet
 studytime_abs_dataset_mat2 <- student_mat[, c("absences", "studytime")]
 studytime_abs_dataset_por2 <- student_por[, c("absences", "studytime")]
@@ -876,8 +1041,35 @@ ggplot(studytime_abs_dataset_por2, aes(x = factor(studytime))) +
   labs(title = "Nombre d'élèves en fonction du temps d'étude chez les élèves de Portugais",
        x = "Temps d'étude", y = "Nombre d'élèves") +
   theme_minimal()
+```
+Cette fois encore, il y a sensiblement moins d'étudiant dans les catégories 3 et 4, mais il sont suffisamment nombreux pour qu'il reste judicieux de garder toutes les catégories.
 
+Egalement, les étudiants au nombre d'absences extrêmes étant toujours présents, il serait encore une fois intéressant de regarder plutot la médiane des absences pour chaque catégorie plutôt que la moyenne.
 
-``` 
+Nous réutilisions la même méthodologie que précedemment.
 
+```{r Question 5 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
 
+#En fonction du studytime ?
+
+#Etablir les deux datasets avec le nombre d'absences et le temps de trajet
+studytime_abs_dataset_mat3 <- aggregate(absences ~ studytime, data = student_mat, FUN = median)
+studytime_abs_dataset_por3 <- aggregate(absences ~ studytime, data = student_por, FUN = median)
+
+#Maths
+ggplot(studytime_abs_dataset_mat3, aes(x = studytime, y = absences)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Nombre median d'absences en fonction du temps d'étude chez les élèves de Maths",
+       x = "Temps d'étude hebdomadaire", y = "Nombre moyen d'absences") +
+  theme_minimal()
+
+#Portugais
+ggplot(studytime_abs_dataset_por3, aes(x = studytime, y = absences)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Nombre median d'absences en fonction du temps d'étude chez les élèves de Portugais",
+       x = "Temps d'étude hebdomadaire", y = "Nombre moyen d'absences") +
+  theme_minimal()
+
+```
+Nous observons aisément, sur la représentation portant sur le dataset des élèves de portugais qu'en effet, plus un élève étudie en dehors des cours, plus il est assidu sur sa présence en classe.
+On peut donc confirmer que les élèves qui sont présents souvent en cours, sont sérieux et assidus et travaillent également beaucoup en dehors des cours, et que les élèves qui sont justements absents n'ont pas tendance à beaucoup travailler pour rattraper leur retard.
