@@ -979,21 +979,21 @@ Dans un premier temps, il est nécessaire de récupérer les informations dont o
 #La temps de trajet jusque son lieu d'étude est-il un facteur d'absence ?
 
 #Etablir les deux datasets avec le nombre d'absences et le temps de trajet
-distance_abs_dataset_mat <- aggregate(absences ~ traveltime, data = tableMat, FUN = mean)
-distance_abs_dataset_por <- aggregate(absences ~ traveltime, data = tablePor, FUN = mean)
+distance_abs_dataset_mat <- aggregate(absences ~ traveltime, data = student_mat, FUN = mean)
+distance_abs_dataset_por <- aggregate(absences ~ traveltime, data = student_por, FUN = mean)
 
 #Nombre d'absences moyen : sur le total des 93 cours de l'année
 
 #Maths
 ggplot(distance_abs_dataset_mat, aes(x = traveltime, y = absences)) +
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity", fill = "cyan3") +
   labs(title = "Nombre moyen d'absences en fonction du temps de trajet \nchez les élèves de Maths",
        x = "Temps de trajet", y = "Nombre moyen d'absences") +
   theme_minimal()
 
 #Portugais
 ggplot(distance_abs_dataset_por, aes(x = traveltime, y = absences)) +
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity", fill = "cyan3") +
   labs(title = "Nombre moyen d'absences en fonction du temps de trajet \nchez les élèves de Portugais",
        x = "Temps de trajet", y = "Nombre moyen d'absences") +
   theme_minimal()
@@ -1010,20 +1010,20 @@ Visualisons ceci en récupérant les données de chaque étudiant et en les repr
 ```{r Question 8 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
 
 #Etablir les deux datasets avec le nombre d'absences et le temps de trajet
-distance_abs_dataset_mat2 <- tableMat[, c("absences", "traveltime")]
-distance_abs_dataset_por2 <- tablePor[, c("absences", "traveltime")]
+distance_abs_dataset_mat2 <- student_mat[, c("absences", "traveltime")]
+distance_abs_dataset_por2 <- student_por[, c("absences", "traveltime")]
 
 
 # Maths
 ggplot(distance_abs_dataset_mat2, aes(x = factor(traveltime), y = absences)) +
-  geom_violin() +
+  geom_violin(fill = "cyan3") +
   labs(title = "Nombre d'absences en fonction du temps de trajet \nchez les élèves de Maths",
        x = "Temps de trajet", y = "Nombre d'absences") +
   theme_minimal()
 
 # Portugais
 ggplot(distance_abs_dataset_por2, aes(x = factor(traveltime), y = absences)) +
-  geom_violin() +
+  geom_violin(fill = "cyan3") +
   labs(title = "Nombre d'absences en fonction du temps de trajet \nchez les élèves de Portugais",
        x = "Temps de trajet", y = "Nombre d'absences") +
   theme_minimal()
@@ -1041,14 +1041,14 @@ Essayons de visualiser ce groupe à l'aide d'un box plot afin de se rendre mieux
 
 # Maths
 ggplot(distance_abs_dataset_mat2, aes(x = factor(traveltime), y = absences)) +
-  geom_boxplot() +
+  geom_boxplot(fill = "cyan3") +
   labs(title = "Nombre d'absences en fonction du temps de trajet \nchez les élèves de Maths",
        x = "Temps de trajet", y = "Nombre d'absences") +
   theme_minimal()
 
 # Portugais
 ggplot(distance_abs_dataset_por2, aes(x = factor(traveltime), y = absences)) +
-  geom_boxplot() +
+  geom_boxplot(fill = "cyan3") +
   labs(title = "Nombre d'absences en fonction du temps de trajet \nchez les élèves de Portugais",
        x = "Temps de trajet", y = "Nombre d'absences") +
   theme_minimal()
@@ -1068,7 +1068,7 @@ Il serait intéressant de savoir combien d'individus sont présents dans chacun 
 
 # Maths
 ggplot(distance_abs_dataset_mat2, aes(x = factor(traveltime))) +
-  geom_bar(stat = "count") +
+  geom_bar(stat = "count", fill = "chartreuse1") +
   geom_text(stat = "count", aes(label = ..count..), vjust = -0.5) +
   labs(title = "Nombre d'élèves en fonction du temps de trajet \nchez les élèves de Maths",
        x = "Temps de trajet", y = "Nombre d'élèves") +
@@ -1076,7 +1076,7 @@ ggplot(distance_abs_dataset_mat2, aes(x = factor(traveltime))) +
 
 # Portugais
 ggplot(distance_abs_dataset_por2, aes(x = factor(traveltime))) +
-  geom_bar(stat = "count") +
+  geom_bar(stat = "count", fill = "chartreuse1") +
   geom_text(stat = "count", aes(label = ..count..), vjust = -0.5) +
   labs(title = "Nombre d'élèves en fonction du temps de trajet \nchez les élèves de Portugais",
        x = "Temps de trajet", y = "Nombre d'élèves") +
@@ -1093,8 +1093,8 @@ En appliquant ces améliorations, on peu donc obtenir ceci.
 #Question 8 :
 #La temps de trajet jusque son lieu d'étude est-il un facteur d'absence ?
 
-distance_abs_dataset_mat3 <- tableMat
-distance_abs_dataset_por3 <- tablePor
+distance_abs_dataset_mat3 <- student_mat
+distance_abs_dataset_por3 <- student_por
 
 #Créer une nouvelle variable qui regroupe les catégories traveltime = 3 et traveltime = 4 en une seule catégorie traveltime >= 3
 # Créer une nouvelle variable traveltime_cat à partir de la variable traveltime
@@ -1114,14 +1114,14 @@ distance_abs_dataset_por3 <- aggregate(absences ~ traveltime_cat, data = distanc
 
 #Maths
 ggplot(distance_abs_dataset_mat3, aes(x = traveltime_cat, y = absences)) +
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity", fill = "cyan3") +
   labs(title = "Nombre median d'absences en fonction du temps de trajet \nchez les élèves de Maths",
        x = "Temps de trajet", y = "Nombre moyen d'absences") +
   theme_minimal()
 
 #Portugais
 ggplot(distance_abs_dataset_por3, aes(x = traveltime_cat, y = absences)) +
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity", fill = "cyan3") +
   labs(title = "Nombre median d'absences en fonction du temps de trajet \nchez les élèves de Portugais",
        x = "Temps de trajet", y = "Nombre median d'absences") +
   theme_minimal()
@@ -1153,19 +1153,19 @@ Regardons le nombre d'absences moyen en fonction du temps d'étude.
 #En fonction du studytime ?
 
 #Etablir les deux datasets avec le nombre d'absences et le temps de trajet
-studytime_abs_dataset_mat <- aggregate(absences ~ studytime, data = tableMat, FUN = mean)
-studytime_abs_dataset_por <- aggregate(absences ~ studytime, data = tablePor, FUN = mean)
+studytime_abs_dataset_mat <- aggregate(absences ~ studytime, data = student_mat, FUN = mean)
+studytime_abs_dataset_por <- aggregate(absences ~ studytime, data = student_por, FUN = mean)
 
 #Maths
 ggplot(studytime_abs_dataset_mat, aes(x = studytime, y = absences)) +
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity", fill = "lightblue") +
   labs(title = "Nombre moyen d'absences en fonction du temps d'étude \nchez les élèves de Maths",
        x = "Temps d'étude hebdomadaire", y = "Nombre moyen d'absences") +
   theme_minimal()
 
 #Portugais
 ggplot(studytime_abs_dataset_por, aes(x = studytime, y = absences)) +
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity", fill = "lightblue") +
   labs(title = "Nombre moyen d'absences en fonction du temps d'étude \nchez les élèves de Portugais",
        x = "Temps d'étude hebdomadaire", y = "Nombre moyen d'absences") +
   theme_minimal()
@@ -1180,12 +1180,12 @@ Regardons tout de même combien d'étudiants sont considérés dans chacune des 
 ```{r Question 8 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
 
 #Etablir les deux datasets avec le nombre d'absences et le temps de trajet
-studytime_abs_dataset_mat2 <- tableMat[, c("absences", "studytime")]
-studytime_abs_dataset_por2 <- tablePor[, c("absences", "studytime")]
+studytime_abs_dataset_mat2 <- student_mat[, c("absences", "studytime")]
+studytime_abs_dataset_por2 <- student_por[, c("absences", "studytime")]
 
 # Maths
 ggplot(studytime_abs_dataset_mat2, aes(x = factor(studytime))) +
-  geom_bar(stat = "count") +
+  geom_bar(stat = "count", fill = "lightgreen") +
   geom_text(stat = "count", aes(label = ..count..), vjust = -0.5) +
   labs(title = "Nombre d'élèves en fonction du temps d'étude chez les élèves de Maths",
        x = "Temps d'étude", y = "Nombre d'élèves") +
@@ -1193,7 +1193,7 @@ ggplot(studytime_abs_dataset_mat2, aes(x = factor(studytime))) +
 
 # Portugais
 ggplot(studytime_abs_dataset_por2, aes(x = factor(studytime))) +
-  geom_bar(stat = "count") +
+  geom_bar(stat = "count", fill = "lightgreen") +
   geom_text(stat = "count", aes(label = ..count..), vjust = -0.5) +
   labs(title = "Nombre d'élèves en fonction du temps d'étude chez les élèves de Portugais",
        x = "Temps d'étude", y = "Nombre d'élèves") +
@@ -1210,19 +1210,19 @@ Nous réutilisions la même méthodologie que précedemment, et nous allons repr
 #En fonction du studytime ?
 
 #Etablir les deux datasets avec le nombre d'absences et le temps de trajet
-studytime_abs_dataset_mat3 <- aggregate(absences ~ studytime, data = tableMat, FUN = median)
-studytime_abs_dataset_por3 <- aggregate(absences ~ studytime, data = tablePor, FUN = median)
+studytime_abs_dataset_mat3 <- aggregate(absences ~ studytime, data = student_mat, FUN = median)
+studytime_abs_dataset_por3 <- aggregate(absences ~ studytime, data = student_por, FUN = median)
 
 #Maths
 ggplot(studytime_abs_dataset_mat3, aes(x = studytime, y = absences)) +
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity", fill = "lightblue") +
   labs(title = "Nombre median d'absences en fonction du temps d'étude \nchez les élèves de Maths",
        x = "Temps d'étude hebdomadaire", y = "Nombre moyen d'absences") +
   theme_minimal()
 
 #Portugais
 ggplot(studytime_abs_dataset_por3, aes(x = studytime, y = absences)) +
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity", fill = "lightblue") +
   labs(title = "Nombre median d'absences en fonction du temps d'étude \nchez les élèves de Portugais",
        x = "Temps d'étude hebdomadaire", y = "Nombre moyen d'absences") +
   theme_minimal()
