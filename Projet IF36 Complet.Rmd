@@ -1130,7 +1130,6 @@ ggplot(distance_abs_dataset_por3, aes(x = traveltime_cat, y = absences)) +
 En appliquant ces modifications, on identifie clairement que le temps de trajet ne semble pas d'avoir d'influence sur le nombre d'absences.
 
 
-
   Comme on a vu que le temps de trajet ne semble pas vraiment influer sur l'absentéisme, on reste un peu sur notre faim. On a pas trouvé de variable corrélée à l'absentéisme ...
 Il est intéressant de se demander : qu'est ce qui serait correlé à ces absences alors ? 
 Ainsi, une autre idée nous vient tout de suite en tête : le temps d'étude ! En effet, un étudiant travaillant beaucoup en dehors des cours, devrait logiquement aussi participer aux cours.
@@ -1230,11 +1229,7 @@ ggplot(studytime_abs_dataset_por3, aes(x = studytime, y = absences)) +
 
 ```
 Nous observons aisément, sur la représentation portant sur le dataset des élèves de portugais qu'en effet, plus un élève étudie en dehors des cours, plus il est assidu sur sa présence en classe.
-<<<<<<< HEAD
 
 La représentation du dataset de mathématique elle, n'infirme ni ne confirme la tendance.
 
 On peut donc penser plutôt correctement que les élèves qui sont présents souvent en cours, sont sérieux et assidus et travaillent également beaucoup en dehors des cours, et que les élèves qui sont justements absents n'ont pas tendance à beaucoup travailler pour rattraper leur retard.
-=======
-On peut donc confirmer que les élèves qui sont présents souvent en cours, sont sérieux et assidus et travaillent également beaucoup en dehors des cours, et que les élèves qui sont justements absents n'ont pas tendance à beaucoup travailler pour rattraper leur retard.
->>>>>>> e4cd27d961acb795e374250ad26f994c2e09eaa6
