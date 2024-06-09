@@ -829,7 +829,7 @@ df_summary <- data %>%
 # Création du barplot avec ggplot2
 ggplot(df_summary, aes(x = higher, y = percentage, fill = address)) +
   geom_bar(stat = "identity", position = "dodge") +
-  labs(title = "Pourcentage d'étudiants souhaitant poursuivre une éducation supérieure en fonction de leur milieu de vie",
+  labs(title = "Pourcentage d'étudiants souhaitant poursuivre une éducation supérieure",
        x = "Souhaite poursuivre une éducation supérieure",
        y = "Pourcentage",
        fill = "Milieu de vie") +
