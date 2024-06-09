@@ -972,7 +972,7 @@ Dans notre dataset, nous avons les informations pour chaque étudiant de :
 - leur nombre d'absences scolaires sur les 93 cours de l'année
 
 
-Dans un premier temps, il est nécessaire de récupérer les informations dont on a besoin. Ici, on extrait directement le nombre d'absences moyen par catégorie de temps de trajet sur les élèves de Portugais et de Maths.
+Dans un premier temps, il est nécessaire de récupérer les informations dont on a besoin. Ici, on extrait directement le nombre d'absences moyen par catégorie de temps de trajet sur les élèves de Portugais et de Maths, et on visualise.
 
 ```{r Question 8 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
 #Question 8 :
@@ -987,26 +987,25 @@ distance_abs_dataset_por <- aggregate(absences ~ traveltime, data = tablePor, FU
 #Maths
 ggplot(distance_abs_dataset_mat, aes(x = traveltime, y = absences)) +
   geom_bar(stat = "identity") +
-  labs(title = "Nombre moyen d'absences en fonction du temps de trajet chez les élèves de Maths",
+  labs(title = "Nombre moyen d'absences en fonction du temps de trajet \nchez les élèves de Maths",
        x = "Temps de trajet", y = "Nombre moyen d'absences") +
   theme_minimal()
 
 #Portugais
 ggplot(distance_abs_dataset_por, aes(x = traveltime, y = absences)) +
   geom_bar(stat = "identity") +
-  labs(title = "Nombre moyen d'absences en fonction du temps de trajet chez les élèves de Portugais",
+  labs(title = "Nombre moyen d'absences en fonction du temps de trajet \nchez les élèves de Portugais",
        x = "Temps de trajet", y = "Nombre moyen d'absences") +
   theme_minimal()
 
 ```
-On remarque immédiatement quelque chose d'assez étonnant : gloabalement, plus les élèves ont un temps de trajet élevé, moins ils sont absents. Cela s'observe plus particulièrement sur le dataset des élèves de maths, là ou sur la classe de portugais, l'absence moyenne est plus linéaire, mais n'infirme pas non plus la tendance observée en maths.
+On remarque immédiatement quelque chose d'assez étonnant : globalement, plus les élèves ont un temps de trajet élevé, moins ils sont absents. Cela s'observe plus particulièrement sur le dataset des élèves de maths, là ou sur la classe de portugais, l'absence moyenne est plus linéaire, mais n'infirme pas non plus la tendance observée en maths.
 
 Ces résultats semblent illogique, plus le temps de trajet est long, plus l'absentéisme est un gain de temps pour un étudiant. De plus, avec plus de temps de trajet, les problèmes de transport sont plus courants et donc retards et absentéismes devraient l'être aussi.
 
 Nous allons donc essayer de comprendre ces résultats, peut être que certains étudiants faussent les résultats avec un nombre d'absence extraordinaire.
 
-
-(Ce que l'on remarque directement, en dehors de notre question, c'est que les élèves sont bien moins absents en portugais qu'en mathématiques et ce, quelque soit leur temps de trajet. Cela peut s'expliquer facilement par le fait que les mathématiques sont globalement plus difficiles les langues et que donc d'y échapper par l'absentéisme peut etre une porte de sortie pour certains.)
+Visualisons ceci en récupérant les données de chaque étudiant et en les représentant sur un violin plot classé par catégorie de temps de trajet. Le but est d'observer la répartition du nombre d'absences des étudiants.
 
 ```{r Question 8 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
 
@@ -1018,25 +1017,24 @@ distance_abs_dataset_por2 <- tablePor[, c("absences", "traveltime")]
 # Maths
 ggplot(distance_abs_dataset_mat2, aes(x = factor(traveltime), y = absences)) +
   geom_violin() +
-  labs(title = "Nombre d'absences en fonction du temps de trajet chez les élèves de Maths",
+  labs(title = "Nombre d'absences en fonction du temps de trajet \nchez les élèves de Maths",
        x = "Temps de trajet", y = "Nombre d'absences") +
   theme_minimal()
 
 # Portugais
 ggplot(distance_abs_dataset_por2, aes(x = factor(traveltime), y = absences)) +
   geom_violin() +
-  labs(title = "Nombre d'absences en fonction du temps de trajet chez les élèves de Portugais",
+  labs(title = "Nombre d'absences en fonction du temps de trajet \nchez les élèves de Portugais",
        x = "Temps de trajet", y = "Nombre d'absences") +
   theme_minimal()
-
-
 ```
-On a donc réalisé des violon plot afin d'observer la répartition du nombre d'absence des élèves.
+Ce qu'on remarque tout de suite, c'est que les formes des violon plot se ressemblent plutôt bien entre les différentes catégories de temps de trajet et les différents cours. Le nombre d'absences à l'air de se comporter uniformément entre les différents temps de trajet.
 
-Ce qu'on observe c'est que les formes des violon plot se ressemblent plutôt entre les différentes catégories de temps de trajet et les différents cours.
-Ce qui diffère, c'est sur les temps de trajet 1 et 2, il y a la présence d'un petit groupe de personne avec un nombre d'absences très élevé. Ce groupe est un facteur d'augmentation de la moyenne d'absences important et étire la forme du violin vers le haut.
+Ce qu'on identifie ensuite, et qui diffère en fonction des catégories, c'est que sur les temps de trajet 1 et 2, il y a la présence d'un petit groupe de personne avec un nombre d'absences très élevé. 
+Ce groupe est un facteur d'augmentation de la moyenne d'absences important et étire grandement la forme du violin vers le haut.
 
-Essayons de visualiser ce groupe à l'aide d'un box plot afin de se rendre mieux compte.
+Essayons de visualiser ce groupe à l'aide d'un box plot afin de se rendre mieux compte de ces individus.
+
 ```{r Question 8 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
 
 #Boxplot
@@ -1044,25 +1042,27 @@ Essayons de visualiser ce groupe à l'aide d'un box plot afin de se rendre mieux
 # Maths
 ggplot(distance_abs_dataset_mat2, aes(x = factor(traveltime), y = absences)) +
   geom_boxplot() +
-  labs(title = "Nombre d'absences en fonction du temps de trajet chez les élèves de Maths",
+  labs(title = "Nombre d'absences en fonction du temps de trajet \nchez les élèves de Maths",
        x = "Temps de trajet", y = "Nombre d'absences") +
   theme_minimal()
 
 # Portugais
 ggplot(distance_abs_dataset_por2, aes(x = factor(traveltime), y = absences)) +
   geom_boxplot() +
-  labs(title = "Nombre d'absences en fonction du temps de trajet chez les élèves de Portugais",
+  labs(title = "Nombre d'absences en fonction du temps de trajet \nchez les élèves de Portugais",
        x = "Temps de trajet", y = "Nombre d'absences") +
   theme_minimal()
-
 ```
-A l'aide du box plot, on remarque plus facilement les individus sortant du groupe global d'absences moyennes.
-On remarque également le comportement du nombre d'absences moyennes hors extrémas. Ce que l'on identifie, c'est que en dehors des quelques élèves très peu assidus, le nombre d'absences moyen ne semble pas évoluer avec le temps de trajet. Les 4 box plot sont relativement similaires.
 
-Egalement, on observe que plus le temps de trajet est long, moins le nombre d'individus en dehors des normes semble être élevé. 
+A l'aide du box plot, on remarque plus facilement les individus sortant du groupe global d'absences moyennes. Il sont assez nombreux sur les catégories de temps de trajet 1 et 2, et semblent fausser grandement la valeur de nombre d'absences moyen. En effet, certains se placent à plus de 50 absences, ce qui est 10 fois la moyenne.
+
+On remarque également le comportement du nombre d'absences moyennes hors extrémas. Ce que l'on identifie, c'est que en dehors des quelques élèves très peu assidus, le comportement du nombre d'absences ne semble pas évoluer avec le temps de trajet. Les 4 box plot sont relativement similaires.
+
+Aussi, on observe que plus le temps de trajet est long, moins le nombre d'individus en dehors des normes semble être élevé. 
 Mais cela est sûrement dû au nombre d'individus dans chacun des échantillons.
 Il serait intéressant de savoir combien d'individus sont présents dans chacun des échantillons afin d'avoir une analyse plus correcte.
-```{r Question 5 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
+
+```{r Question 8 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
 
 #Combien d'étudiants dans chaque catégorie ?
 
@@ -1070,7 +1070,7 @@ Il serait intéressant de savoir combien d'individus sont présents dans chacun 
 ggplot(distance_abs_dataset_mat2, aes(x = factor(traveltime))) +
   geom_bar(stat = "count") +
   geom_text(stat = "count", aes(label = ..count..), vjust = -0.5) +
-  labs(title = "Nombre d'élèves en fonction du temps de trajet chez les élèves de Maths",
+  labs(title = "Nombre d'élèves en fonction du temps de trajet \nchez les élèves de Maths",
        x = "Temps de trajet", y = "Nombre d'élèves") +
   theme_minimal()
 
@@ -1078,20 +1078,17 @@ ggplot(distance_abs_dataset_mat2, aes(x = factor(traveltime))) +
 ggplot(distance_abs_dataset_por2, aes(x = factor(traveltime))) +
   geom_bar(stat = "count") +
   geom_text(stat = "count", aes(label = ..count..), vjust = -0.5) +
-  labs(title = "Nombre d'élèves en fonction du temps de trajet chez les élèves de Portugais",
+  labs(title = "Nombre d'élèves en fonction du temps de trajet \nchez les élèves de Portugais",
        x = "Temps de trajet", y = "Nombre d'élèves") +
   theme_minimal()
-
-
-
 ```
-Tout se suite, on comprend pourquoi il y avait une plus grande présence d'individus hors normes dans les groupes : respectivement, les groupes 1 et 2 sont bien plus imposants que les 3 et 4.
+
+Tout se suite, on comprend pourquoi il y avait une plus grande présence d'individus hors normes dans certains groupes : respectivement, les groupes 1 et 2 sont bien plus imposants que les 3 et 4.
 
 Une meilleure analyse aurait donc été de d'un côté, combiner directement les temps de trajets 3 et 4 afin d'avoir des valeurs se basant sur un plus grand nombre d'individus, et d'un autre côté de regarder le nombre d'absences médian afin de limiter l'effet des quelques étudiants très peu assidus.
 
-On peut donc obtenir ceci.
+En appliquant ces améliorations, on peu donc obtenir ceci.
 
-****
 ```{r Question 8 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
 #Question 8 :
 #La temps de trajet jusque son lieu d'étude est-il un facteur d'absence ?
@@ -1118,25 +1115,28 @@ distance_abs_dataset_por3 <- aggregate(absences ~ traveltime_cat, data = distanc
 #Maths
 ggplot(distance_abs_dataset_mat3, aes(x = traveltime_cat, y = absences)) +
   geom_bar(stat = "identity") +
-  labs(title = "Nombre median d'absences en fonction du temps de trajet chez les élèves de Maths",
+  labs(title = "Nombre median d'absences en fonction du temps de trajet \nchez les élèves de Maths",
        x = "Temps de trajet", y = "Nombre moyen d'absences") +
   theme_minimal()
 
 #Portugais
 ggplot(distance_abs_dataset_por3, aes(x = traveltime_cat, y = absences)) +
   geom_bar(stat = "identity") +
-  labs(title = "Nombre median d'absences en fonction du temps de trajet chez les élèves de Portugais",
+  labs(title = "Nombre median d'absences en fonction du temps de trajet \nchez les élèves de Portugais",
        x = "Temps de trajet", y = "Nombre median d'absences") +
   theme_minimal()
 
 ```
-En appliquant ces modifications, on identifie clairement que le temps de trajet n'a pas d'influence sur le nombre d'absences.
+En appliquant ces modifications, on identifie clairement que le temps de trajet ne semble pas d'avoir d'influence sur le nombre d'absences.
 
-****
 
-Comme on a vu que le temps de trajet ne semble pas vraiment influer sur l'absentéisme, on reste un peu sur notre faim. On a pas trouvé de variable corrélée à l'absentéisme ...
+
+  Comme on a vu que le temps de trajet ne semble pas vraiment influer sur l'absentéisme, on reste un peu sur notre faim. On a pas trouvé de variable corrélée à l'absentéisme ...
 Il est intéressant de se demander : qu'est ce qui serait correlé à ces absences alors ? 
 Ainsi, une autre idée nous vient tout de suite en tête : le temps d'étude ! En effet, un étudiant travaillant beaucoup en dehors des cours, devrait logiquement aussi participer aux cours.
+
+On va donc utiliser la variable studytime :
+- c'est le temps d'étude hebdomadaire entre 1 et 4 ( 1 - <2 heures, 2 - 2 à 5 heures, 3 - 5 à 10 heures, ou 4 - >10 heures)
 
 On se pose donc la question suivante : les étudiants travaillants plus en dehors des cours, sont-ils plus ou moins absents ?
 
@@ -1147,6 +1147,8 @@ En effet la question fait sens car deux possibilités peuvent être vraies.
 Vérifions cela.
 
 Pour ceci, nous prenons la même méthodologie que précedemment mais nous changeons la variable travel_time avec studytime.
+Regardons le nombre d'absences moyen en fonction du temps d'étude.
+
 ```{r Question 8 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
 
 #En fonction du studytime ?
@@ -1158,14 +1160,14 @@ studytime_abs_dataset_por <- aggregate(absences ~ studytime, data = tablePor, FU
 #Maths
 ggplot(studytime_abs_dataset_mat, aes(x = studytime, y = absences)) +
   geom_bar(stat = "identity") +
-  labs(title = "Nombre moyen d'absences en fonction du temps d'étude chez les élèves de Maths",
+  labs(title = "Nombre moyen d'absences en fonction du temps d'étude \nchez les élèves de Maths",
        x = "Temps d'étude hebdomadaire", y = "Nombre moyen d'absences") +
   theme_minimal()
 
 #Portugais
 ggplot(studytime_abs_dataset_por, aes(x = studytime, y = absences)) +
   geom_bar(stat = "identity") +
-  labs(title = "Nombre moyen d'absences en fonction du temps d'étude chez les élèves de Portugais",
+  labs(title = "Nombre moyen d'absences en fonction du temps d'étude \nchez les élèves de Portugais",
        x = "Temps d'étude hebdomadaire", y = "Nombre moyen d'absences") +
   theme_minimal()
 
@@ -1202,7 +1204,7 @@ Cette fois encore, il y a sensiblement moins d'étudiant dans les catégories 3 
 
 Egalement, les étudiants au nombre d'absences extrêmes étant toujours présents, il serait encore une fois intéressant de regarder plutot la médiane des absences pour chaque catégorie plutôt que la moyenne.
 
-Nous réutilisions la même méthodologie que précedemment.
+Nous réutilisions la même méthodologie que précedemment, et nous allons représenter le nombre d'absences médian en fonction du temps d'étude.
 
 ```{r Question 8 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
 
@@ -1215,17 +1217,20 @@ studytime_abs_dataset_por3 <- aggregate(absences ~ studytime, data = tablePor, F
 #Maths
 ggplot(studytime_abs_dataset_mat3, aes(x = studytime, y = absences)) +
   geom_bar(stat = "identity") +
-  labs(title = "Nombre median d'absences en fonction du temps d'étude chez les élèves de Maths",
+  labs(title = "Nombre median d'absences en fonction du temps d'étude \nchez les élèves de Maths",
        x = "Temps d'étude hebdomadaire", y = "Nombre moyen d'absences") +
   theme_minimal()
 
 #Portugais
 ggplot(studytime_abs_dataset_por3, aes(x = studytime, y = absences)) +
   geom_bar(stat = "identity") +
-  labs(title = "Nombre median d'absences en fonction du temps d'étude chez les élèves de Portugais",
+  labs(title = "Nombre median d'absences en fonction du temps d'étude \nchez les élèves de Portugais",
        x = "Temps d'étude hebdomadaire", y = "Nombre moyen d'absences") +
   theme_minimal()
 
 ```
 Nous observons aisément, sur la représentation portant sur le dataset des élèves de portugais qu'en effet, plus un élève étudie en dehors des cours, plus il est assidu sur sa présence en classe.
-On peut donc confirmer que les élèves qui sont présents souvent en cours, sont sérieux et assidus et travaillent également beaucoup en dehors des cours, et que les élèves qui sont justements absents n'ont pas tendance à beaucoup travailler pour rattraper leur retard.
+
+La représentation du dataset de mathématique elle, n'infirme ni ne confirme la tendance.
+
+On peut donc penser plutôt correctement que les élèves qui sont présents souvent en cours, sont sérieux et assidus et travaillent également beaucoup en dehors des cours, et que les élèves qui sont justements absents n'ont pas tendance à beaucoup travailler pour rattraper leur retard.
