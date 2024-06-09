@@ -965,7 +965,7 @@ On retrouve la même observation que précédemment. Les personnes qui prennent 
 
 Etant étudiants, nous nous devons de participer aux cours qui nous sont dispensés : c'est une devoir ainsi qu'un besoin qu'il faut respecter. En revanche, nous savons que parmi les étudiants, certains sont plus réguliers que d'autres. On peut retrouver certains systématiquement à l'université et d'autres certainement pas.
 Mais pourquoi certains sont-ils plus absents que d'autres ? Est-ce par choix ou par handicap ?
-Ici nous allons essayer de répondre en partie à cette question, en essayant de voir s''il y a un lien entre le temps de trajet et l'absentéisme en cours.
+Ici nous allons essayer de répondre en partie à cette question, en essayant de voir s'il y a un lien entre le temps de trajet et l'absentéisme en cours.
 
 Dans notre dataset, nous avons les informations pour chaque étudiant de : 
 - temps de trajet domicile-école entre 1 et 4 (avec : 1 - <15 min., 2 - 15 à 30 min., 3 - 30 min. à 1 heure, ou 4 - >1 heure)
