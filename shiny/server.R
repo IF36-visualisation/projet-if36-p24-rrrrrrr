@@ -5,6 +5,9 @@ library(dplyr)
 
 library(grid)
 library(gridExtra) 
+library(readr)
+
+tableMat <- read_csv("../data/student-mat.csv")
 
 
 #Prepare the data for the exploration
