@@ -992,6 +992,7 @@ ggplot(distance_abs_dataset_mat, aes(x = traveltime, y = absences)) +
   geom_bar(stat = "identity", fill = "cyan3") +
   labs(title = "Nombre moyen d'absences en fonction du temps de trajet \nchez les élèves de Maths",
        x = "Temps de trajet", y = "Nombre moyen d'absences") +
+  scale_x_continuous(breaks = c(1, 2, 3, 4), labels = c("<15 min", "15 à 30 min", "30 min à 1h", "> 1h")) +
   theme_minimal()
 
 #Portugais
@@ -999,6 +1000,7 @@ ggplot(distance_abs_dataset_por, aes(x = traveltime, y = absences)) +
   geom_bar(stat = "identity", fill = "cyan3") +
   labs(title = "Nombre moyen d'absences en fonction du temps de trajet \nchez les élèves de Portugais",
        x = "Temps de trajet", y = "Nombre moyen d'absences") +
+  scale_x_continuous(breaks = c(1, 2, 3, 4), labels = c("<15 min", "15 à 30 min", "30 min à 1h", "> 1h")) +
   theme_minimal()
 
 ```
@@ -1022,6 +1024,8 @@ ggplot(distance_abs_dataset_mat2, aes(x = factor(traveltime), y = absences)) +
   geom_violin(fill = "cyan3") +
   labs(title = "Nombre d'absences en fonction du temps de trajet \nchez les élèves de Maths",
        x = "Temps de trajet", y = "Nombre d'absences") +
+  scale_x_discrete(labels=c("1" = "<15 min", "2" = "15 à 30 min",
+                              "3" = "30 min à 1h", "4" = "> 1h")) +
   theme_minimal()
 
 # Portugais
@@ -1029,6 +1033,8 @@ ggplot(distance_abs_dataset_por2, aes(x = factor(traveltime), y = absences)) +
   geom_violin(fill = "cyan3") +
   labs(title = "Nombre d'absences en fonction du temps de trajet \nchez les élèves de Portugais",
        x = "Temps de trajet", y = "Nombre d'absences") +
+  scale_x_discrete(labels=c("1" = "<15 min", "2" = "15 à 30 min",
+                              "3" = "30 min à 1h", "4" = "> 1h")) +
   theme_minimal()
 ```
 Ce qu'on remarque tout de suite, c'est que les formes des violon plot se ressemblent plutôt bien entre les différentes catégories de temps de trajet et les différents cours. Le nombre d'absences à l'air de se comporter uniformément entre les différents temps de trajet.
@@ -1047,6 +1053,8 @@ ggplot(distance_abs_dataset_mat2, aes(x = factor(traveltime), y = absences)) +
   geom_boxplot(fill = "cyan3") +
   labs(title = "Nombre d'absences en fonction du temps de trajet \nchez les élèves de Maths",
        x = "Temps de trajet", y = "Nombre d'absences") +
+  scale_x_discrete(labels=c("1" = "<15 min", "2" = "15 à 30 min",
+                              "3" = "30 min à 1h", "4" = "> 1h")) +
   theme_minimal()
 
 # Portugais
@@ -1054,6 +1062,8 @@ ggplot(distance_abs_dataset_por2, aes(x = factor(traveltime), y = absences)) +
   geom_boxplot(fill = "cyan3") +
   labs(title = "Nombre d'absences en fonction du temps de trajet \nchez les élèves de Portugais",
        x = "Temps de trajet", y = "Nombre d'absences") +
+  scale_x_discrete(labels=c("1" = "<15 min", "2" = "15 à 30 min",
+                              "3" = "30 min à 1h", "4" = "> 1h")) +
   theme_minimal()
 ```
 
@@ -1075,6 +1085,8 @@ ggplot(distance_abs_dataset_mat2, aes(x = factor(traveltime))) +
   geom_text(stat = "count", aes(label = ..count..), vjust = -0.5) +
   labs(title = "Nombre d'élèves en fonction du temps de trajet \nchez les élèves de Maths",
        x = "Temps de trajet", y = "Nombre d'élèves") +
+  scale_x_discrete(labels=c("1" = "<15 min", "2" = "15 à 30 min",
+                              "3" = "30 min à 1h", "4" = "> 1h")) +
   theme_minimal()
 
 # Portugais
@@ -1083,6 +1095,8 @@ ggplot(distance_abs_dataset_por2, aes(x = factor(traveltime))) +
   geom_text(stat = "count", aes(label = ..count..), vjust = -0.5) +
   labs(title = "Nombre d'élèves en fonction du temps de trajet \nchez les élèves de Portugais",
        x = "Temps de trajet", y = "Nombre d'élèves") +
+  scale_x_discrete(labels=c("1" = "<15 min", "2" = "15 à 30 min",
+                              "3" = "30 min à 1h", "4" = "> 1h")) +
   theme_minimal()
 ```
 
@@ -1120,6 +1134,8 @@ ggplot(distance_abs_dataset_mat3, aes(x = traveltime_cat, y = absences)) +
   geom_bar(stat = "identity", fill = "cyan3") +
   labs(title = "Nombre median d'absences en fonction du temps de trajet \nchez les élèves de Maths",
        x = "Temps de trajet", y = "Nombre moyen d'absences") +
+  scale_x_discrete(labels=c("1" = "<15 min", "2" = "15 à 30 min",
+                              "3+" = ">30 min")) +
   theme_minimal()
 
 #Portugais
@@ -1127,6 +1143,8 @@ ggplot(distance_abs_dataset_por3, aes(x = traveltime_cat, y = absences)) +
   geom_bar(stat = "identity", fill = "cyan3") +
   labs(title = "Nombre median d'absences en fonction du temps de trajet \nchez les élèves de Portugais",
        x = "Temps de trajet", y = "Nombre median d'absences") +
+  scale_x_discrete(labels=c("1" = "<15 min", "2" = "15 à 30 min",
+                              "3+" = ">30 min")) +
   theme_minimal()
 
 ```
@@ -1164,6 +1182,7 @@ ggplot(studytime_abs_dataset_mat, aes(x = studytime, y = absences)) +
   geom_bar(stat = "identity", fill = "lightblue") +
   labs(title = "Nombre moyen d'absences en fonction du temps d'étude \nchez les élèves de Maths",
        x = "Temps d'étude hebdomadaire", y = "Nombre moyen d'absences") +
+  scale_x_continuous(breaks = c(1, 2, 3, 4), labels = c("<2 heures", "2 à 5 heures", "5 à 10 heures", ">10 heures")) +
   theme_minimal()
 
 #Portugais
@@ -1171,6 +1190,7 @@ ggplot(studytime_abs_dataset_por, aes(x = studytime, y = absences)) +
   geom_bar(stat = "identity", fill = "lightblue") +
   labs(title = "Nombre moyen d'absences en fonction du temps d'étude \nchez les élèves de Portugais",
        x = "Temps d'étude hebdomadaire", y = "Nombre moyen d'absences") +
+  scale_x_continuous(breaks = c(1, 2, 3, 4), labels = c("<2 heures", "2 à 5 heures", "5 à 10 heures", ">10 heures")) +
   theme_minimal()
 
 ```
@@ -1192,7 +1212,10 @@ ggplot(studytime_abs_dataset_mat2, aes(x = factor(studytime))) +
   geom_text(stat = "count", aes(label = ..count..), vjust = -0.5) +
   labs(title = "Nombre d'élèves en fonction du temps d'étude chez les élèves de Maths",
        x = "Temps d'étude", y = "Nombre d'élèves") +
+  scale_x_discrete(labels=c("1" = "<2 heures", "2" = "2 à 5 heures",
+                              "3" = "5 à 10 heures", "4" = ">10 heures")) +
   theme_minimal()
+
 
 # Portugais
 ggplot(studytime_abs_dataset_por2, aes(x = factor(studytime))) +
@@ -1200,6 +1223,8 @@ ggplot(studytime_abs_dataset_por2, aes(x = factor(studytime))) +
   geom_text(stat = "count", aes(label = ..count..), vjust = -0.5) +
   labs(title = "Nombre d'élèves en fonction du temps d'étude chez les élèves de Portugais",
        x = "Temps d'étude", y = "Nombre d'élèves") +
+  scale_x_discrete(labels=c("1" = "<2 heures", "2" = "2 à 5 heures",
+                              "3" = "5 à 10 heures", "4" = ">10 heures")) +
   theme_minimal()
 ```
 Cette fois encore, il y a sensiblement moins d'étudiant dans les catégories 3 et 4, mais il sont suffisamment nombreux pour qu'il reste judicieux de garder toutes les catégories.
@@ -1221,6 +1246,7 @@ ggplot(studytime_abs_dataset_mat3, aes(x = studytime, y = absences)) +
   geom_bar(stat = "identity", fill = "lightblue") +
   labs(title = "Nombre median d'absences en fonction du temps d'étude \nchez les élèves de Maths",
        x = "Temps d'étude hebdomadaire", y = "Nombre moyen d'absences") +
+  scale_x_continuous(breaks = c(1, 2, 3, 4), labels = c("<2 heures", "2 à 5 heures", "5 à 10 heures", ">10 heures")) +
   theme_minimal()
 
 #Portugais
@@ -1228,6 +1254,7 @@ ggplot(studytime_abs_dataset_por3, aes(x = studytime, y = absences)) +
   geom_bar(stat = "identity", fill = "lightblue") +
   labs(title = "Nombre median d'absences en fonction du temps d'étude \nchez les élèves de Portugais",
        x = "Temps d'étude hebdomadaire", y = "Nombre moyen d'absences") +
+  scale_x_continuous(breaks = c(1, 2, 3, 4), labels = c("<2 heures", "2 à 5 heures", "5 à 10 heures", ">10 heures")) +
   theme_minimal()
 
 ```
