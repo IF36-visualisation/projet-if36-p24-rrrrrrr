@@ -586,7 +586,7 @@ ggplot(data = tableMat, aes(x = factor(Dalc), y = MoyenneNote,fill=factor(Dalc))
   scale_color_manual(values = "red", name = "Légende", labels = "Médiane") +
   labs(x = "Consommation d'alcool en semaine", y = "Moyenne des notes en math sur les trois semestres") +
   theme_minimal() +
-  ggtitle("Répartition des notes en math par niveau de consommation d'alcool")+
+  ggtitle("Répartition des notes en math par niveau de consommation d'alcool en semaine")+
   theme(legend.position = "right")  
 
 
@@ -634,7 +634,7 @@ ggplot(data = tablePor, aes(x = factor(Dalc), y = MoyenneNote,fill=factor(Dalc))
     labels = c("très faible","faible","moyenne","forte","très forte")
   ) +
   scale_color_manual(values = "red", name = "Légende", labels = "Médiane")+
-  labs(x = "Consommation d'alcool en semaine", y = "Moyenne des notes en math sur les trois semestres",title = "Répartition de la moyenne des notes en portugais par niveau de consommation d'alcool") +
+  labs(x = "Consommation d'alcool en semaine", y = "Moyenne des notes en math sur les trois semestres",title = "Répartition de la moyenne des notes en portugais par niveau de consommation d'alcool en semaine") +
   theme_minimal() +
   theme(plot.title = element_text(size=11,face="bold"))  
 
@@ -662,7 +662,7 @@ ggplot(data = tablePor, aes(x = GroupedDalc, y = MoyenneNote,fill=GroupedDalc)) 
     labels = c("faible et très faible","moyenne","forte et très forte")
   ) +
   scale_color_manual(values = "red", name = "Légende", labels = "Médiane") +
-  labs(x = "Consommation d'alcool en semaine", y = "Moyenne des notes en portugais sur les trois semestres",title ="Répartition de la moyenne des notes en portugais par niveau de consommation d'alcool regroupé") +
+  labs(x = "Consommation d'alcool en semaine", y = "Moyenne des notes en portugais sur les trois semestres",title ="Répartition de la moyenne des notes en portugais par niveau de consommation d'alcool regroupé en semaine") +
   theme_minimal() +
   theme(plot.title = element_text(size=10,face="bold")) 
 
