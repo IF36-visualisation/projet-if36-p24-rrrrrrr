@@ -268,7 +268,7 @@ On constate donc une différence de comportement face à l'alcool en fonction de
 
 
 
-## Question2 - les sportifs ont-ils de meilleurs résultats scolaires que les autres ?
+## Question 2 - les sportifs ont-ils de meilleurs résultats scolaires que les autres ?
 
 Il nous est souvent raconté que faire du sport permet un meilleur apprentissage, une meilleure concentration et un meilleur développement. Suivant cette logique, il nous est expliqué que par extension, le sport permet d'obtenir de meilleurs résultats scolaires. Mais est-ce la vérité ?
 
@@ -1295,9 +1295,14 @@ Enfin, ce projet nous a permis de réaliser une première analyse exploratoire p
 ### Théo: 
 Ce projet m'a permis d'aquérir de nouvelles compétences techniques mais aussi organisationnelles et relationnelles dans la gestion de projets orientés Data. Je pense qu'il aurait pû être pertinent de développer les manières de partager une analyse exploratoire d'un dataset afin d'en faire un réel support de réflexion et imaginer les moyens de présenter des résultats au plus grand nombre.
 
+### Louis: 
+La réalisation de ce projet m'a été très bénéfique et m'a apporté des compétences à la fois techniques : coder en R, faire des dataviz parlantes, meilleure utilisation de git, savoir exploiter des données et avoir un esprit critique dessus ... et aussi organisationnelles grâce à la gestion que l'on a pu avoir du projet tout au long du semestre. Il aurait été intéressant pour ce projet d'avoir un dataset encore plus complet afin de répondre à d'autres interrogations sur lesquelles nous ne pouvions pas avoir de réponse ici. 
+Également, développer un shiny dashboard traitant l'ensemble des questions que nous avons abordées aurait été long, mais pertinent car permettrait une plus facile exploitation des résultats obtenus et faciliterait un partage et une l'utilisation facilitée et plus ouverte à un grand public.
+
+
 ### Lucas:
 Projet complet et formateur sur les différentes notions de dataviz mais aussi sur la gestion de projet (git / projet à 4 personnes). Cela donne envie de s'investir dans des datasets beaucoup plus larges où l'on pourraient faire des liens de corrélation plus détaillée. 
-### Louis:
+
 
 ### Matthieu:
 Ce projet fut pour moi l'occasion d'apprendre à mettre en œuvre la théorie vue en cours sur la visualisation de données, dans le but de créer des visualisations adéquates à l'analyse de nos données. Il aurait été intéressant d'avoir plus de données continues, afin de pouvoir réaliser d'autres types de visualisations et ainsi d'avoir plus de données intéressantes.   
@@ -1312,6 +1317,10 @@ Afin de se partager au mieux le travail et d'avoir un travail de groupe efficace
 ### Lucas:
 
 ### Louis:
+Question 2 : Les sportifs ont-ils de meilleurs résultats scolaires que les autres ?
+Question 8 : Existe-t-il une corrélation entre le temps de trajet entre le domicile et l'université et l'absentéisme chez les étudiants ?
+Shiny Dashboard de la question de Théo : Question 1: Le fait de sortir souvent avec des amis entraîne-t-il nécessairement une plus grande consommation d'alcool ?
+
 
 ### Matthieu:
 Question 4:  Y-a-t-il un lien entre la consommation d'alcool et l'échec scolaire, l'absentéisme ?
