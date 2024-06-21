@@ -1300,10 +1300,22 @@ Ce projet m'a permis d'aguérir de nouvelles compétences techniques mais aussi 
 ### Louis:
 
 ### Matthieu:
+Ce projet fut pour moi l'occasion d'apprendre à mettre en œuvre la théorie vue en cours sur la visualisation de données, dans le but de créer des visualisations adéquates à l'analyse de nos données. Il aurait été intéressant d'avoir plus de données continues, afin de pouvoir réaliser d'autres types de visualisations et ainsi d'avoir plus de données intéressantes.   
 
 
 ## Annexe
 
+Afin de se partager au mieux le travail et d'avoir un travail de groupe efficace, nous avons décidé de nous attribuer chacun plusieurs questions. Voici notre répartition du travail :
+
+### Théo: 
+
+### Lucas:
+
+### Louis:
+
+### Matthieu:
+Question 4:  Y-a-t-il un lien entre la consommation d'alcool et l'échec scolaire, l'absentéisme ?
+Question 7 : Travailler plus pour gagner plus?
 
 
 
