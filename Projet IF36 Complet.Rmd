@@ -32,6 +32,18 @@ tableMat$MoyenneNote <- rowMeans(tableMat[,c("G1","G2","G3")])
 tablePor <- read_csv("./data/student-por.csv")
 tablePor$MoyenneNote <- rowMeans(tablePor[,c("G1","G2","G3")])
 ```
+## Introduction
+
+Le projet d'IF36 est pour nous l'occasion d'étudier un domaine qui nous intéresse. Etant nous-mêmes étudiants, quoi de mieux que les conditions de vie des étudiants? Notre objectif durant cette analyse exploratoire d'un dataset sur ce sujet sera de mettre en avant l'existence ou non de relations entre différents aspects de la vie d'étudiants. Nous couvrirons globalement l'ensemble des pilliers sur lesquels repose la vie typique d'un étudiant: la scolarité, l'éducation, la vie extra-scolaire et les relations privées.
+
+### Données
+
+Notre dataset provient de l'UCI Machine Learning trouvé sur kaggle.
+
+Il contient 649 observations et 32 variables. Les variables sont de type binaire, numérique et nominal. Ce dataset décrit de manière globale les différentes facette de la vie d'un étudiant (scolaire, extra-scolaire, relation, consommation alcool, milieu familial). Il convient donc à notre utilisation. De plus ce dataset est libre d'utilisation (CC0: Public Domain). Les données ont été obtenues lors d'une enquête auprès des étudiants des cours de mathématiques et de portugais au lycée.
+
+Information sur le dataset de référence : P. Cortez and A. Silva. Using Data Mining to Predict Secondary School Student Performance. In A. Brito and J. Teixeira Eds., Proceedings of 5th FUture BUsiness TEChnology Conference (FUBUTEC 2008) pp. 5-12, Porto, Portugal, April, 2008, EUROSIS, ISBN 978-9077381-39-7.
+
 
 Dans un premier temps, nous devons nous poser la question de comment allons-nous étudier nos données. En effet, on à  notre dispotition deux datasets : un sur les élèves suivant le cours de mathématiques (395) et l'autre de portugais (649). Or il est important de noter que la plupart des étudiants de mathématiques suivent également le cours de portugais (382 / 395).
 
@@ -62,7 +74,7 @@ all_students <- mutate(all_students, generalsup=ifelse(grepl("yes",schoolsup) | 
 ## Question 1: Le fait de sortir souvent avec des amis entraîne-t-il nécessairement une plus grande consommation d'alcool ?
 
 
-Pour continuer notre étude exploratoire des habitudes de vie des étudiants nous souhaitions analyser une possible influence des sorties entre amis sur la consommation d'alcool.
+Pour commencer notre étude exploratoire des habitudes de vie des étudiants nous souhaitions analyser une possible influence des sorties entre amis sur la consommation d'alcool.
 Les jeunes adaptent-ils leur consommation d'alcool en fonction de leurs sorties? Quelle forme prend cette consommation d'alcool sur une semaine?
 Nous aurions tendance à penser que les personnes voyant souvent leurs amis en dehors des cours seraient plus fréquemment exposés à l'alcool lors de soirées par exemple. De ce fait, nous pourrions nous attendre à constater une forte consommation d'alcool chez les individus sortant beaucoup.
 Une consommation d'alcool plus importante le week-end qu'en semaine chez les étudiants serait également en accord avec la pensée commune.
@@ -129,8 +141,6 @@ df_walc_inf$type <- "Consommation le week-end  - Sortant peu"
 
 combined_df <- bind_rows(df_dalc, df_walc, df_dalc_inf, df_walc_inf)
 
-str(combined_df)
-head(combined_df)
 
 # Création du graphique général
 ggplot(combined_df, aes(x = "", y = frequences, fill = notes, label = paste0(round(frequences, 1), "%"))) +
@@ -384,20 +394,12 @@ Pourquoi n'a-t-on pas des résultats si peu convaincants ?
 
 Peut être que dans notre jeu de données, ceux pratiquant des activités extra-scolaires n'ont pas été tant meilleurs que les autres et qu'il nous faudrait plus de données pour avoir de meilleures résultats.
 
-En conclusion, avec notre jeu de données, il n'est pas vraiment possible de répondre à  la question "Faire du sport permet-il vraiment dâ€™avoir de meilleurs résultats scolaires ?". En revanche, essayer de répondre à  cette question a permis de mettre en évidence des différences scolaires en fonctions des niveaux de santé et de la pratique d'activités extra-scolaires. Cela a finalement permis de répondre à  une question tout autre qui pourrait être "Est-il bon pour les études de pratiquer des activités extra-scolaires quelque soit sa santé ?". Question à  laquelle la réponse est oui, mais il faut adapter ses activités à  son niveau de santé afin de maximiser ses résultats scolaires.
-
-
-
-
-
-
+En conclusion, avec notre jeu de données, il n'est pas vraiment possible de répondre à  la question "Faire du sport permet-il vraiment d'avoir de meilleurs résultats scolaires ?". En revanche, essayer de répondre à  cette question a permis de mettre en évidence des différences scolaires en fonctions des niveaux de santé et de la pratique d'activités extra-scolaires. Cela a finalement permis de répondre à  une question tout autre qui pourrait être "Est-il bon pour les études de pratiquer des activités extra-scolaires quelque soit sa santé ?". Question à  laquelle la réponse est oui, mais il faut adapter ses activités à  son niveau de santé afin de maximiser ses résultats scolaires.
 
 
 
 
 ## Question 3: Existe-t-il une corrélation entre les les étudiants considérés comme geek et leurs notes en mathématiques?
-
-### Partie exploratoire
 
 Nous avons ce cliché en tête qui dit que les geeks sont des personnes qui ont de bonnes notes en mathématiques. Nous allons essayer de voir si cela est vrai en analysant un dataset d'étudiants.
 
@@ -517,9 +519,7 @@ ggplot(means, aes(x = sex, y = mean_math_score, fill = sex)) +
 <br>Sur ce graphique, on a décidé de comparer les moyennes des notes en mathématiques entre les hommes et les femmes. On remarque que les femmes et les hommes ont excatement la même moyenne. Cela montre que le sexe n'a pas d'impact sur les notes en mathématiques. 
 
 
-### Partie analyse 
-
-Dans cette partie nous tenterons d'analyser les différents résultats obtenus dans la partie exploratoire.
+Nous tenterons maintenant d'analyser les différents résultats obtenus jusqu'à présent.
 
 En effet, la précédente partie nous a permis de récolter beaucoup d'informations maintenant il s'agit de les comprendres.
 
@@ -556,7 +556,6 @@ print(nbPersonneDalMat)
 
 ```
 
-### Partie exploration
 
 L'arrivée dans le monde des études est souvent le moment de la découverte de l'alcool. Or sachant le caractère destructeur que peut avoir l'alcool sur la santé. Nous nous sommes posé la question de l'impact de l'alcool sur l'échec scolaire. Nous voulons savoir si l'alcool a un impact à  court terme sur ce groupe d'individu et pouvoir, peut être, le quantifier.
 
@@ -591,8 +590,6 @@ ggplot(data = tableMat, aes(x = factor(Dalc), y = MoyenneNote,fill=factor(Dalc))
 
 
 ```
-
-## Analyse statistique des données
 
 On remarque que la répartition statistique des moyennes en math n'est pas vraiment impactée par la consommation d'alcool. En effet, les groupes d'individus qui se notent 5/5 pour la consommation d'alcool ont même une médiane légèrement supérieure à  ceux qui se notent 1/5 (ceux qui consomment le moins).
 
@@ -641,8 +638,6 @@ ggplot(data = tablePor, aes(x = factor(Dalc), y = MoyenneNote,fill=factor(Dalc))
 
 ```
 
-## Analyse des données
-
 On remarque ici que la médiane des notes en Portugais chute légèrement quand la consommation d'alcool en semaine augmente. On retrouve ici, aussi le même phénomène de réduction de l'intervalle autour de la médianne quand la consommation d'alcool augmente.
 
 Nous nous attendions à  des résultats beaucoup plus significatifs. Il est fort probable aussi, au vu de l'auto-évaluation de la consommation d'alcool sur une échelle de 1 à  5, qu'un biais de la centralité est apparu chez certains étudiants, ce qui a peut-être faussé les données.
@@ -668,8 +663,6 @@ ggplot(data = tablePor, aes(x = GroupedDalc, y = MoyenneNote,fill=GroupedDalc)) 
 
 
 ```
-
-## Analyse des données
 
 Avec ce graphique, on constate la même chute de la moyenne avec maintenant un échantillon plus important pour la catégorie 4-5. On remarque aussi, les gaussiennes grâce à  cette visualisation en violin, ce qui nous conforte à  croire que l'échantillon est un peu plus représentatif.
 
@@ -709,7 +702,6 @@ On remarque que notre hypothèse a été validé. Il y a bien plus de redoubleme
 
 ## Question 5:  Le niveau d'étude des parents influence t'il le niveau scolaire des enfants ?
 
-### Partie exploration
 
 On entend régulièrement que les parents ayant fait de longues études poussent leurs enfants à faire de même et a excellé dans leur vie scolaire. Cela peut créer une énorme pression sur les épaules des enfants et parfois même engendrer des drames. En effet, il arrive que certains poussé à bout tombent dans une dépression ou même pire.
 On retrouve souvent ce genre d'histoire dans les pays ou le niveau d'éducation est représentatif du niveau social. 
@@ -787,9 +779,8 @@ Ce graphique représente la relation entre le niveau d'éducation, cette fois de
 Mais plus les parents ont un niveau d'étude élevé plus les moyennes sont homogènes ce qui prouve un certain impacte sur l'éducation des enfants.
 
 
-### Partie analyse 
 
-Dans cette partie nous tenterons d'analyser les différents résultats obtenus dans la partie exploratoire.
+Nous tenterons maintenant d'analyser les différents résultats obtenus jusqu'à présent.
 
 Pour récapituler ce que nous avons observé dans la partie exploratoire, nous avons pu voir que les enfants dont les parents ont un niveau d'éducation élevé ont en moyenne de meilleures notes que les enfants dont les parents ont un niveau d'éducation faible.  
 Nous avons aussi pu voir que le fait que ce soit le père ou la mère qui ait un niveau d'éducation élevé n'a pas d'impact sur les notes des enfants.
@@ -889,7 +880,6 @@ Enfin, la proximité avec le domicile est le critère le moins important dans le
 
 # Question 7 : Travailler plus pour gagner plus?
 
-### Partie exploration
 
 Le bon sens voudrait que ceux qui travaillent le plus soient ceux qui ont les meilleurs résultats. Tout de même, nous somme curieux de vérifier cette hypothèse. 
 Pour analyser cette hypothèse, nous allons avoir besoin des données suivantes :
@@ -977,13 +967,13 @@ Dans notre dataset, nous avons les informations pour chaque étudiant de :
 
 Dans un premier temps, il est nécessaire de récupérer les informations dont on a besoin. Ici, on extrait directement le nombre d'absences moyen par catégorie de temps de trajet sur les élèves de Portugais et de Maths, et on visualise.
 
-```{r Question 8 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
+```{r Question 8 : Distance correlée absentéisme bar, fig.align='center', echo=FALSE}
 #Question 8 :
 #La temps de trajet jusque son lieu d'étude est-il un facteur d'absence ?
 
 #Etablir les deux datasets avec le nombre d'absences et le temps de trajet
-distance_abs_dataset_mat <- aggregate(absences ~ traveltime, data = student_mat, FUN = mean)
-distance_abs_dataset_por <- aggregate(absences ~ traveltime, data = student_por, FUN = mean)
+distance_abs_dataset_mat <- aggregate(absences ~ traveltime, data = tableMat, FUN = mean)
+distance_abs_dataset_por <- aggregate(absences ~ traveltime, data = tablePor, FUN = mean)
 
 #Nombre d'absences moyen : sur le total des 93 cours de l'année
 
@@ -1012,11 +1002,11 @@ Nous allons donc essayer de comprendre ces résultats, peut être que certains �
 
 Visualisons ceci en récupérant les données de chaque étudiant et en les représentant sur un violin plot classé par catégorie de temps de trajet. Le but est d'observer la répartition du nombre d'absences des étudiants.
 
-```{r Question 8 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
+```{r Question 8 : Distance correlée absentéisme violin, fig.align='center', echo=FALSE}
 
 #Etablir les deux datasets avec le nombre d'absences et le temps de trajet
-distance_abs_dataset_mat2 <- student_mat[, c("absences", "traveltime")]
-distance_abs_dataset_por2 <- student_por[, c("absences", "traveltime")]
+distance_abs_dataset_mat2 <- tableMat[, c("absences", "traveltime")]
+distance_abs_dataset_por2 <- tablePor[, c("absences", "traveltime")]
 
 
 # Maths
@@ -1044,7 +1034,7 @@ Ce groupe est un facteur d'augmentation de la moyenne d'absences important et é
 
 Essayons de visualiser ce groupe à l'aide d'un box plot afin de se rendre mieux compte de ces individus.
 
-```{r Question 8 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
+```{r Question 8 : Distance correlée absentéisme boxplot, fig.align='center', echo=FALSE}
 
 #Boxplot
 
@@ -1075,7 +1065,7 @@ Aussi, on observe que plus le temps de trajet est long, moins le nombre d'indivi
 Mais cela est sûrement dû au nombre d'individus dans chacun des échantillons.
 Il serait intéressant de savoir combien d'individus sont présents dans chacun des échantillons afin d'avoir une analyse plus correcte.
 
-```{r Question 8 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
+```{r Question 8 : Distance correlée absentéisme maths, fig.align='center', echo=FALSE}
 
 #Combien d'étudiants dans chaque catégorie ?
 
@@ -1106,12 +1096,12 @@ Une meilleure analyse aurait donc été de d'un côté, combiner directement les
 
 En appliquant ces améliorations, on peu donc obtenir ceci.
 
-```{r Question 8 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
+```{r Question 8 : Distance correlée absentéisme portugais, fig.align='center', echo=FALSE}
 #Question 8 :
 #La temps de trajet jusque son lieu d'étude est-il un facteur d'absence ?
 
-distance_abs_dataset_mat3 <- student_mat
-distance_abs_dataset_por3 <- student_por
+distance_abs_dataset_mat3 <- tableMat
+distance_abs_dataset_por3 <- tablePor
 
 #Créer une nouvelle variable qui regroupe les catégories traveltime = 3 et traveltime = 4 en une seule catégorie traveltime >= 3
 # Créer une nouvelle variable traveltime_cat à partir de la variable traveltime
@@ -1169,13 +1159,13 @@ Vérifions cela.
 Pour ceci, nous prenons la même méthodologie que précedemment mais nous changeons la variable travel_time avec studytime.
 Regardons le nombre d'absences moyen en fonction du temps d'étude.
 
-```{r Question 8 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
+```{r Question 8 : Absences Potrugais, fig.align='center', echo=FALSE}
 
 #En fonction du studytime ?
 
 #Etablir les deux datasets avec le nombre d'absences et le temps de trajet
-studytime_abs_dataset_mat <- aggregate(absences ~ studytime, data = student_mat, FUN = mean)
-studytime_abs_dataset_por <- aggregate(absences ~ studytime, data = student_por, FUN = mean)
+studytime_abs_dataset_mat <- aggregate(absences ~ studytime, data = tableMat, FUN = mean)
+studytime_abs_dataset_por <- aggregate(absences ~ studytime, data = tablePor, FUN = mean)
 
 #Maths
 ggplot(studytime_abs_dataset_mat, aes(x = studytime, y = absences)) +
@@ -1200,11 +1190,11 @@ Et l'on observe tout de suite quelque chose de net : en effet, en maths et en po
 Regardons tout de même combien d'étudiants sont considérés dans chacune des catégories. Peut-être que comme précedemment, les échantillons ne sont pas suffisants dans certaines catégories.
 
 
-```{r Question 8 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
+```{r Question 8 : Nombre eleves Portugais, fig.align='center', echo=FALSE}
 
 #Etablir les deux datasets avec le nombre d'absences et le temps de trajet
-studytime_abs_dataset_mat2 <- student_mat[, c("absences", "studytime")]
-studytime_abs_dataset_por2 <- student_por[, c("absences", "studytime")]
+studytime_abs_dataset_mat2 <- tableMat[, c("absences", "studytime")]
+studytime_abs_dataset_por2 <- tablePor[, c("absences", "studytime")]
 
 # Maths
 ggplot(studytime_abs_dataset_mat2, aes(x = factor(studytime))) +
@@ -1233,13 +1223,13 @@ Egalement, les étudiants au nombre d'absences extrêmes étant toujours présen
 
 Nous réutilisions la même méthodologie que précedemment, et nous allons représenter le nombre d'absences médian en fonction du temps d'étude.
 
-```{r Question 8 : Distance correlée absentéisme, fig.align='center', echo=FALSE}
+```{r Question 8 :Absence Maths, fig.align='center', echo=FALSE}
 
 #En fonction du studytime ?
 
 #Etablir les deux datasets avec le nombre d'absences et le temps de trajet
-studytime_abs_dataset_mat3 <- aggregate(absences ~ studytime, data = student_mat, FUN = median)
-studytime_abs_dataset_por3 <- aggregate(absences ~ studytime, data = student_por, FUN = median)
+studytime_abs_dataset_mat3 <- aggregate(absences ~ studytime, data = tableMat, FUN = median)
+studytime_abs_dataset_por3 <- aggregate(absences ~ studytime, data = tablePor, FUN = median)
 
 #Maths
 ggplot(studytime_abs_dataset_mat3, aes(x = studytime, y = absences)) +
@@ -1263,3 +1253,63 @@ Nous observons aisément, sur la représentation portant sur le dataset des él�
 La représentation du dataset de mathématique elle, n'infirme ni ne confirme la tendance.
 
 On peut donc penser plutôt correctement que les élèves qui sont présents souvent en cours, sont sérieux et assidus et travaillent également beaucoup en dehors des cours, et que les élèves qui sont justements absents n'ont pas tendance à beaucoup travailler pour rattraper leur retard.
+
+
+
+## Conclusion
+
+En démarrant notre analyse exploratoire du dataset nous voulions savoir si les données pouvaient nous permettre de détruire ou confirmer des stéréotypes, découvrir des tendances comportementales chez les étudiants et apporter de potentielles pistes de réflexion sur la psychologie de cette population. Puisque nous n'avions pas pour but de prouver un phénomène mais plutôt d'en découvrir, nous avons dû bien prendre le temps de comprendre notre dataset et réfléchir aux manières de lier les différentes features à notre disposition. De cette réflexion sont nées les huit questions sur lesquelles nous nous sommes penchés.
+
+L'analyse exploratoire de notre dataset nous a permis de dégager plusieurs constats significatifs concernant les comportements et les performances scolaires des individus en fonction de divers facteurs. Voici les conclusions principales de notre étude :
+
+### Consommation d'alcool et âge :
+Nous avons observé une différence notable dans la consommation d'alcool en fonction de l'âge des individus sortant fréquemment entre amis. Les mineurs semblent plus influençables et tendent à imiter les comportements des plus âgés, ce qui entraîne une consommation d'alcool de plus en plus précoce.
+
+### Impact des activités extra-scolaires sur les études :
+Il est bénéfique pour les études de pratiquer des activités extra-scolaires, indépendamment de l'état de santé de l'individu. Cependant, il est crucial d'adapter ces activités au niveau de santé de chaque individu pour maximiser les résultats scolaires.
+
+### Performance en mathématiques et appartenance à la communauté geek :
+Contrairement à une croyance populaire, notre analyse montre que les geeks n'obtiennent pas de meilleures notes en mathématiques que les non-geeks.
+
+### Consommation d'alcool et redoublement :
+Il existe une corrélation proportionnelle entre la consommation d'alcool et le taux de redoublement. Une consommation d'alcool plus élevée est associée à une probabilité accrue de redoublement scolaire.
+
+### Influence du niveau d'études des parents :
+Le niveau d'études des parents a un impact réel et significatif sur les résultats scolaires de leurs enfants. Les enfants de parents ayant un niveau d'études plus élevé tendent à obtenir de meilleurs résultats académiques.
+
+### Origine géographique et aspirations éducatives :
+Les étudiants ayant grandi en milieu rural montrent une tendance à s'ouvrir aux opportunités éducatives en dehors de leur région d'origine. Ils préfèrent souvent quitter leur environnement familial pour obtenir une meilleure éducation.
+
+### Assiduité et performance scolaire :
+Les élèves qui sont régulièrement présents en cours, sérieux et assidus, montrent de meilleures performances scolaires. En revanche, les élèves souvent absents ne compensent pas leur retard par un travail accru en dehors des cours, ce qui affecte négativement leurs résultats.
+
+Ces observations fournissent des informations précieuses pour comprendre les divers facteurs influençant les comportements et les performances scolaires. Elles soulignent l'importance de l'environnement familial, de la gestion des activités extra-scolaires, de l'assiduité en classe, et des comportements sociaux sur le parcours éducatif des étudiants. 
+
+Nous sommes d'ailleurs persuadés que si un tel dataset pouvait être réalisé à une échelle plus importante (régionale, nationale, mondiale) le résultat serait précieux et permettrait des avancées sur la compréhension des étudiants, de leurs modes de vie et de leurs besoins. En effet, les résultats de notre analyse sont intéressants mais ne peuvent pas être considéré comme une généralité du fait du nombre de réponses prélevées et de la provenance commune des étudiants.Cependant, ils peuvent servir de base à des interventions ciblées visant à améliorer les résultats scolaires et à soutenir les étudiants dans leur développement académique et personnel.
+
+Enfin, ce projet nous a permis de réaliser une première analyse exploratoire poussée d'un dataset pour l'ensemble des membres du groupe. Nous avons également dû travailler en groupe, collaborer et nous organiser de manière réfléchie et selon les capacités de chacun. L'utilisation de Git nous a permis de versionner notre travail et de profiter d'une version centralisée du projet modifiable par chacun en local avant une mise en commun.
+
+
+## Commentaires de chaque membre du groupe
+
+### Théo: 
+Ce projet m'a permis d'aguérir de nouvelles compétences techniques mais aussi organisationnelles et relationnelles dans la gestion de projets orientés Data. Je pense qu'il aurait pû être pertinent de développer les manières de partager une analyse exploratoire d'un dataset afin d'en faire un réel support de réflexion et imaginer les moyens de présenter des résultats au plus grand nombre.
+
+### Lucas:
+
+### Louis:
+
+### Matthieu:
+
+
+## Annexe
+
+
+
+
+
+
+
+
+
+
