@@ -1313,6 +1313,8 @@ Ce projet fut pour moi l'occasion d'apprendre à mettre en œuvre la théorie vu
 Afin de se partager au mieux le travail et d'avoir un travail de groupe efficace, nous avons décidé de nous attribuer chacun plusieurs questions. Voici notre répartition du travail :
 
 ### Théo: 
+Question 1: Le fait de sortir souvent avec des amis entraîne-t-il nécessairement une plus grande consommation d'alcool ?
+Question 6:  Les étudiants vivant dans un milieu rural sont-ils voués à rester dans leur campagne ?
 
 ### Lucas:
 
