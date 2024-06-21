@@ -1293,10 +1293,10 @@ Enfin, ce projet nous a permis de réaliser une première analyse exploratoire p
 ## Commentaires de chaque membre du groupe
 
 ### Théo: 
-Ce projet m'a permis d'aguérir de nouvelles compétences techniques mais aussi organisationnelles et relationnelles dans la gestion de projets orientés Data. Je pense qu'il aurait pû être pertinent de développer les manières de partager une analyse exploratoire d'un dataset afin d'en faire un réel support de réflexion et imaginer les moyens de présenter des résultats au plus grand nombre.
+Ce projet m'a permis d'aquérir de nouvelles compétences techniques mais aussi organisationnelles et relationnelles dans la gestion de projets orientés Data. Je pense qu'il aurait pû être pertinent de développer les manières de partager une analyse exploratoire d'un dataset afin d'en faire un réel support de réflexion et imaginer les moyens de présenter des résultats au plus grand nombre.
 
 ### Lucas:
-
+Projet complet et formateur sur les différentes notions de dataviz mais aussi sur la gestion de projet (git / projet à 4 personnes). Cela donne envie de s'investir dans des datasets beaucoup plus larges où l'on pourraient faire des liens de corrélation plus détaillée. 
 ### Louis:
 
 ### Matthieu:
